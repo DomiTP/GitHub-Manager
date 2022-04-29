@@ -9,7 +9,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/DomiTP/GitHub-Manager">
-    <img src="resources/icons/GitHub-Manager.png" alt="Logo" width="80" height="80">
+    <img src="resources/icons/GitHub_Manager.png" alt="Logo" width="80" height="80">
   </a>
 
 <h3 align="center">GitHub Manager</h3>
