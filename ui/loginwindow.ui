@@ -63,7 +63,7 @@
        <item>
         <widget class="QLineEdit" name="tokenLineEdit">
          <property name="text">
-             <string>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</string>
+             <string></string>
          </property>
          <property name="placeholderText">
           <string/>
