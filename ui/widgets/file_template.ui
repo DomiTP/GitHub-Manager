@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+    <class>FileTemplate</class>
+    <widget class="QWidget" name="FileTemplate">
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>200</width>
+                <height>34</height>
+            </rect>
+        </property>
+        <property name="windowTitle">
+            <string>Form</string>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+            <item>
+                <widget class="IconLabel" name="nameWidget" native="true"/>
+            </item>
+            <item>
+                <widget class="QLabel" name="commitLabel">
+                    <property name="text">
+                        <string>commit info</string>
+                    </property>
+                </widget>
+            </item>
+            <item>
+                <widget class="QLabel" name="label">
+                    <property name="layoutDirection">
+                        <enum>Qt::LeftToRight</enum>
+                    </property>
+                    <property name="text">
+                        <string>lastModifiedLabel</string>
+                    </property>
+                    <property name="alignment">
+                        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                    </property>
+                </widget>
+            </item>
+        </layout>
+    </widget>
+    <customwidgets>
+        <customwidget>
+            <class>IconLabel</class>
+            <extends>QWidget</extends>
+            <header>widgets.IconLabel</header>
+            <container>1</container>
+        </customwidget>
+    </customwidgets>
+    <resources/>
+    <connections/>
+</ui>

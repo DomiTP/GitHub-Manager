@@ -3,7 +3,8 @@ import re
 from PySide6.QtCore import QSize
 from PySide6.QtGui import QPixmap, QIcon
 from PySide6.QtWebEngineWidgets import QWebEngineView
-from PySide6.QtWidgets import QMainWindow, QLineEdit, QMessageBox
+from PySide6.QtWidgets import QMainWindow, QLineEdit
+from github import Github, BadCredentialsException
 
 from modules import About
 from ui import Ui_GitHubManagerLogin
@@ -25,8 +26,6 @@ class Login(QMainWindow):
         self.browser = QMainWindow()
 
         self.about = About()
-
-        self.confirm = QMessageBox()
 
         self.main_window = main_window
 
@@ -51,16 +50,15 @@ class Login(QMainWindow):
         """
         self.ui.switchVisibilityButton.clicked.connect(self.switch_visibility)
         self.ui.githubAccesTokenButton.clicked.connect(self.get_access_token)
-        self.ui.accessWithoutTokenButton.clicked.connect(self.access)
         self.ui.signInButton.clicked.connect(self.login)
         self.ui.signInButton.setShortcut("Return")
 
-        self.ui.tokenLineEdit.textChanged.connect(self.check_text)
         self.ui.tokenLineEdit.textChanged.connect(self.check_text)
         self.ui.signInButton.setDisabled(True)
 
         self.ui.actionExit.triggered.connect(self.close)
         self.ui.actionAbout.triggered.connect(lambda x: self.about.show())
+        self.ui.errorWidget.hide()
 
     def switch_visibility(self):
         """
@@ -79,44 +77,28 @@ class Login(QMainWindow):
         Check if the text is correct and enable the button
         :param text:  text to check
         """
-        if re.search(r"^[a-zA-Z]+_([a-zA-Z]+(\d+[a-zA-Z]+)+)$", text):
+        if re.search(r"^[a-zA-Z]+_.*$", text):
             self.ui.signInButton.setEnabled(True)
         else:
             self.ui.signInButton.setDisabled(True)
 
-    def access_without_token(self):
-        """
-        Warn the user if he wants to access without token
-        :return: True if the user wants to access without token and False if not
-        """
-        self.confirm.setIcon(QMessageBox.Warning)
-        self.confirm.setWindowTitle("Warning")
-        self.confirm.setText("You are accessing GitHub Manager without a token")
-        self.confirm.setInformativeText("Currently the GitHub API requires a personal token to use, you can continue "
-                                        "without one but it greatly limits the use of the application.\nDo you want to "
-                                        "access without token?")
-        self.confirm.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
-        res = self.confirm.exec()
-        if res == QMessageBox.Yes:
-            return True
-        else:
-            return False
+        self.ui.errorWidget.hide()
 
     def login(self):
         """
         Login to with the token
         :return:
         """
-        self.main_window.start(self.ui.tokenLineEdit.text())
-        self.hide()
-
-    def access(self):
-        """
-        Access without token
-        """
-        if self.access_without_token():
-            self.main_window.start()
+        try:
+            github = Github(self.ui.tokenLineEdit.text())
+            user = github.get_user()
+            self.main_window.start(github, user)
             self.hide()
+        except BadCredentialsException:
+            self.ui.errorWidget.setText("Invalid token")
+            self.ui.errorWidget.set_icon("fa5s.exclamation-triangle")
+            self.ui.errorWidget.set_style(color="red", font_size=13, bold=True)
+            self.ui.errorWidget.show()
 
     def get_access_token(self):
         """

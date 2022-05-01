@@ -31,3 +31,19 @@ class IconLabel(QWidget):
 
     def setText(self, text):
         self.label.setText(text)
+
+    def set_style(self, color=None, font_size=None, bold=False, italic=False, underline=False, font_family=None):
+        style = ""
+        if color:
+            style += "color: %s;" % color
+        if font_size:
+            style += "font-size: %spx;" % font_size
+        if bold:
+            style += "font-weight: bold;"
+        if italic:
+            style += "font-style: italic;"
+        if underline:
+            style += "text-decoration: underline;"
+        if font_family:
+            style += "font-family: %s;" % font_family
+        self.label.setStyleSheet(style)

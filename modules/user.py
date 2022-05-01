@@ -1,13 +1,12 @@
-from github import Github
 from github.AuthenticatedUser import AuthenticatedUser
 from github.NamedUser import NamedUser
 from github.PaginatedList import PaginatedList
 
 
 class User:
-    def __init__(self, user=None):
-        self.github = Github(user)
-        self.user: AuthenticatedUser = self.github.get_user()
+    def __init__(self, github, user):
+        self.github = github
+        self.user: AuthenticatedUser = user
         self.named_user: NamedUser = self.github.get_user(self.user.login)
         self.repos = None
 

@@ -110,6 +110,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_2.addItem(self.verticalSpacer)
 
+
         self.horizontalLayout.addLayout(self.verticalLayout_2)
 
         self.verticalLayout = QVBoxLayout()
@@ -181,7 +182,6 @@ class Ui_MainWindow(object):
         self.mainTabWidget.setCurrentIndex(1)
 
         QMetaObject.connectSlotsByName(MainWindow)
-
     # setupUi
 
     def retranslateUi(self, MainWindow):
@@ -203,3 +203,4 @@ class Ui_MainWindow(object):
         self.menuHelp.setTitle(QCoreApplication.translate("MainWindow", u"Help", None))
         self.menuMenu.setTitle(QCoreApplication.translate("MainWindow", u"Menu", None))
     # retranslateUi
+

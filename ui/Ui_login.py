@@ -16,12 +16,14 @@ from PySide6.QtWidgets import (QFrame, QHBoxLayout, QLabel,
                                QPushButton, QSizePolicy, QSpacerItem, QStatusBar,
                                QVBoxLayout, QWidget)
 
+from widgets.IconLabel import IconLabel
+
 
 class Ui_GitHubManagerLogin(object):
     def setupUi(self, GitHubManagerLogin):
         if not GitHubManagerLogin.objectName():
             GitHubManagerLogin.setObjectName(u"GitHubManagerLogin")
-        GitHubManagerLogin.resize(369, 311)
+        GitHubManagerLogin.resize(369, 247)
         self.actionAbout = QAction(GitHubManagerLogin)
         self.actionAbout.setObjectName(u"actionAbout")
         self.actionHow_to_get_an_GitHub_acces_token = QAction(GitHubManagerLogin)
@@ -70,6 +72,7 @@ class Ui_GitHubManagerLogin(object):
 
         self.horizontalLayout_2.addWidget(self.switchVisibilityButton)
 
+
         self.verticalLayout.addWidget(self.frame)
 
         self.horizontalLayout = QHBoxLayout()
@@ -79,15 +82,10 @@ class Ui_GitHubManagerLogin(object):
 
         self.horizontalLayout.addWidget(self.signInButton)
 
-        self.accessWithoutTokenButton = QPushButton(self.centralwidget)
-        self.accessWithoutTokenButton.setObjectName(u"accessWithoutTokenButton")
+        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
-        self.horizontalLayout.addWidget(self.accessWithoutTokenButton)
+        self.horizontalLayout.addItem(self.horizontalSpacer)
 
-        self.verticalLayout.addLayout(self.horizontalLayout)
-
-        self.horizontalLayout_3 = QHBoxLayout()
-        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
         self.githubAccesTokenButton = QPushButton(self.centralwidget)
         self.githubAccesTokenButton.setObjectName(u"githubAccesTokenButton")
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
@@ -97,13 +95,16 @@ class Ui_GitHubManagerLogin(object):
         self.githubAccesTokenButton.setSizePolicy(sizePolicy)
         self.githubAccesTokenButton.setLayoutDirection(Qt.LeftToRight)
 
-        self.horizontalLayout_3.addWidget(self.githubAccesTokenButton)
+        self.horizontalLayout.addWidget(self.githubAccesTokenButton)
 
-        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.verticalLayout.addLayout(self.horizontalLayout)
 
-        self.horizontalLayout_3.addItem(self.horizontalSpacer)
+        self.errorWidget = IconLabel(self.centralwidget)
+        self.errorWidget.setObjectName(u"errorWidget")
+        sizePolicy.setHeightForWidth(self.errorWidget.sizePolicy().hasHeightForWidth())
+        self.errorWidget.setSizePolicy(sizePolicy)
 
-        self.verticalLayout.addLayout(self.horizontalLayout_3)
+        self.verticalLayout.addWidget(self.errorWidget)
 
         GitHubManagerLogin.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(GitHubManagerLogin)
@@ -128,7 +129,6 @@ class Ui_GitHubManagerLogin(object):
         self.retranslateUi(GitHubManagerLogin)
 
         QMetaObject.connectSlotsByName(GitHubManagerLogin)
-
     # setupUi
 
     def retranslateUi(self, GitHubManagerLogin):
@@ -141,14 +141,13 @@ class Ui_GitHubManagerLogin(object):
         self.signInLabel.setText(QCoreApplication.translate("GitHubManagerLogin", u"Sign in to GitHub Manager", None))
         self.label.setText(QCoreApplication.translate("GitHubManagerLogin", u"Personal acces token:", None))
         self.tokenLineEdit.setText(
-            QCoreApplication.translate("GitHubManagerLogin", u"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", None))
+            QCoreApplication.translate("GitHubManagerLogin", u"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", None))
         self.tokenLineEdit.setPlaceholderText("")
         self.switchVisibilityButton.setText("")
         self.signInButton.setText(QCoreApplication.translate("GitHubManagerLogin", u"Sign in", None))
-        self.accessWithoutTokenButton.setText(
-            QCoreApplication.translate("GitHubManagerLogin", u"Access without token", None))
         self.githubAccesTokenButton.setText(
             QCoreApplication.translate("GitHubManagerLogin", u"Generate Access Token", None))
         self.menuMenu.setTitle(QCoreApplication.translate("GitHubManagerLogin", u"Menu", None))
         self.menuHelp.setTitle(QCoreApplication.translate("GitHubManagerLogin", u"Help", None))
     # retranslateUi
+

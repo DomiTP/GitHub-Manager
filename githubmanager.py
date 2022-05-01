@@ -26,7 +26,6 @@ class GitHubManager(QMainWindow):
 
         self.login = Login(self)
         self.login.show()
-        self.login_method = None
 
         self.about = About()
 
@@ -36,28 +35,13 @@ class GitHubManager(QMainWindow):
 
         self.config()
 
-    def start(self, token=None):
-        """
-        Start
-        :param token: Token de usuario
-        """
-        self.login_method = 1 if token else 0
-
-        if self.login_method == 1:
-            self.token_login(token)
-        else:
-            self.no_token()
+    def start(self, github, user):
+        self.user = User(github, user)
 
         self.load_user_info()
         self.load_repositories()
 
         self.show()
-
-    def token_login(self, token):
-        self.user = User(token)
-
-    def no_token(self):
-        pass  # TODO: Implementar login por token no existente
 
     def config(self):
         self.setWindowIcon(QIcon(LOGO))
