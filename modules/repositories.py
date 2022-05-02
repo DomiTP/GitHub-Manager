@@ -18,6 +18,9 @@ class Repositories(QWidget):
         self.config()
 
     def load_items(self):
+        """
+        Loads the repositories of the user in the listWidget
+        """
         for repo in self.user.get_repos():
             item = QListWidgetItem()
             item.setToolTip(repo.name)
@@ -27,9 +30,15 @@ class Repositories(QWidget):
             self.ui.listWidget.setItemWidget(item, widget)
 
     def config(self):
+        """
+        Configures the signals of the widget
+        """
         self.ui.listWidget.clicked.connect(self.open_repository)
 
     def open_repository(self):
+        """
+        Opens the repository selected in a new window
+        """
         item = self.ui.listWidget.currentItem()
         repo_name = item.toolTip()
         self.open_repo = Repository(self.user.user.get_repo(repo_name))

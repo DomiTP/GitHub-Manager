@@ -36,6 +36,11 @@ class GitHubManager(QMainWindow):
         self.config()
 
     def start(self, github, user):
+        """
+        Loads the user's information and repositories.
+        :param github:
+        :param user:
+        """
         self.user = User(github, user)
 
         self.load_user_info()
@@ -44,16 +49,25 @@ class GitHubManager(QMainWindow):
         self.show()
 
     def config(self):
+        """
+        Configures the main window.
+        """
         self.setWindowIcon(QIcon(LOGO))
 
         self.ui.actionExit.triggered.connect(self.close)
         self.ui.actionAbout.triggered.connect(lambda x: self.about.show())
 
     def load_repositories(self):
+        """
+        Loads the user's repositories.
+        """
         self.repositories_widget = Repositories(self.user)
         self.ui.repositoriesTab.setLayout(QVBoxLayout(self.ui.repositoriesTab).addWidget(self.repositories_widget))
 
     def load_user_info(self):
+        """
+        Loads the user's information.
+        """
         user_data = self.user.get_named_user_data()
         if user_data.name:
             self.ui.nameLabel.setText(user_data.name)
@@ -100,8 +114,8 @@ class GitHubManager(QMainWindow):
 
     def closeEvent(self, event):
         """
-        Cierra todas las ventanas
-        :param event:
+        Closes the application.
+        :param event: Event
         """
         quit()
 

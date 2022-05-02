@@ -8,7 +8,7 @@
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide6.QtCore import (QCoreApplication, QMetaObject)
+from PySide6.QtCore import (QCoreApplication, QMetaObject, Qt)
 from PySide6.QtGui import (QFont)
 from PySide6.QtWidgets import (QComboBox, QFrame, QHBoxLayout,
                                QLabel, QLayout, QListWidget, QPushButton, QSizePolicy, QSpacerItem, QTabWidget,
@@ -56,6 +56,7 @@ class Ui_repository(object):
 
         self.horizontalLayout_5.addWidget(self.starButton)
 
+
         self.verticalLayout.addLayout(self.horizontalLayout_5)
 
         self.tabWidget = QTabWidget(repository)
@@ -99,6 +100,7 @@ class Ui_repository(object):
         self.codeButton.setSizePolicy(sizePolicy)
 
         self.horizontalLayout_3.addWidget(self.codeButton)
+
 
         self.verticalLayout_2.addLayout(self.horizontalLayout_3)
 
@@ -180,14 +182,11 @@ class Ui_repository(object):
 
         self.horizontalLayout_2.addWidget(self.label)
 
-        self.horizontalSpacer = QSpacerItem(80, 20, QSizePolicy.Fixed, QSizePolicy.Minimum)
-
-        self.horizontalLayout_2.addItem(self.horizontalSpacer)
-
         self.configButton = QPushButton(self.code)
         self.configButton.setObjectName(u"configButton")
         sizePolicy.setHeightForWidth(self.configButton.sizePolicy().hasHeightForWidth())
         self.configButton.setSizePolicy(sizePolicy)
+        self.configButton.setLayoutDirection(Qt.RightToLeft)
 
         self.horizontalLayout_2.addWidget(self.configButton)
 
@@ -268,7 +267,6 @@ class Ui_repository(object):
         self.tabWidget.setCurrentIndex(0)
 
         QMetaObject.connectSlotsByName(repository)
-
     # setupUi
 
     def retranslateUi(self, repository):
@@ -292,3 +290,4 @@ class Ui_repository(object):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.issues),
                                   QCoreApplication.translate("repository", u"Issues", None))
     # retranslateUi
+

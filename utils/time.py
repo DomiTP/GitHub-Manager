@@ -1,9 +1,15 @@
 from datetime import datetime
 
 
-def time(text, time):
+def time(text, difference_time):
+    """
+    Calculate the time difference between two times and return the result in human-readable format.
+    :param text:  The text to print before the time.
+    :param difference_time:  The time to calculate the difference from.
+    :return:  The time difference in human-readable format.
+    """
     now = datetime.utcnow()
-    last = time
+    last = difference_time
 
     date = now - last
 

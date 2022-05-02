@@ -141,7 +141,7 @@ class Ui_GitHubManagerLogin(object):
         self.signInLabel.setText(QCoreApplication.translate("GitHubManagerLogin", u"Sign in to GitHub Manager", None))
         self.label.setText(QCoreApplication.translate("GitHubManagerLogin", u"Personal acces token:", None))
         self.tokenLineEdit.setText(
-            QCoreApplication.translate("GitHubManagerLogin", u"", None))
+            QCoreApplication.translate("GitHubManagerLogin", u"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", None))
         self.tokenLineEdit.setPlaceholderText("")
         self.switchVisibilityButton.setText("")
         self.signInButton.setText(QCoreApplication.translate("GitHubManagerLogin", u"Sign in", None))

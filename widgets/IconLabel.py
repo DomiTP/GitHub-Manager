@@ -27,12 +27,29 @@ class IconLabel(QWidget):
             layout.addStretch()
 
     def set_icon(self, qta_id):
+        """
+        Set the icon to the label with the given qta_id.
+        :param qta_id: The qta_id of the icon.
+        """
         self.icon.setPixmap(qta.icon(qta_id).pixmap(self.IconSize))
 
     def setText(self, text):
+        """
+        Set the text of the label.
+        :param text:  The text to set.
+        """
         self.label.setText(text)
 
     def set_style(self, color=None, font_size=None, bold=False, italic=False, underline=False, font_family=None):
+        """
+        Set the style of the label.
+        :param color:  The color of the text.
+        :param font_size:  The size of the font.
+        :param bold:  Whether the text is bold.
+        :param italic:  Whether the text is italic.
+        :param underline:  Whether the text is underlined.
+        :param font_family:  The font family of the text.
+        """
         style = ""
         if color:
             style += "color: %s;" % color
