@@ -12,8 +12,9 @@ from PySide6.QtCore import (QCoreApplication, QMetaObject, QRect,
                             QSize, Qt)
 from PySide6.QtGui import (QAction, QFont, QIcon)
 from PySide6.QtWidgets import (QHBoxLayout, QLabel, QLayout,
-                               QLineEdit, QListWidget, QMenu, QMenuBar, QSizePolicy, QSpacerItem,
-                               QStatusBar, QTabWidget, QVBoxLayout, QWidget)
+                               QMenu, QMenuBar, QSizePolicy,
+                               QSpacerItem, QStatusBar, QTabWidget, QVBoxLayout,
+                               QWidget)
 
 from widgets.IconLabel import IconLabel
 
@@ -29,6 +30,8 @@ class Ui_MainWindow(object):
         self.actionAyuda.setObjectName(u"actionAyuda")
         self.actionExit = QAction(MainWindow)
         self.actionExit.setObjectName(u"actionExit")
+        self.actionReload = QAction(MainWindow)
+        self.actionReload.setObjectName(u"actionReload")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.horizontalLayout = QHBoxLayout(self.centralwidget)
@@ -134,24 +137,13 @@ class Ui_MainWindow(object):
         icon1 = QIcon()
         icon1.addFile(u"../resources/icons/dark repo.png", QSize(), QIcon.Normal, QIcon.Off)
         self.mainTabWidget.addTab(self.repositoriesTab, icon1, "")
-        self.starsTab = QWidget()
-        self.starsTab.setObjectName(u"starsTab")
-        self.verticalLayout_4 = QVBoxLayout(self.starsTab)
+        self.localTab = QWidget()
+        self.localTab.setObjectName(u"localTab")
+        self.verticalLayout_4 = QVBoxLayout(self.localTab)
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
-        self.lineEdit = QLineEdit(self.starsTab)
-        self.lineEdit.setObjectName(u"lineEdit")
-        self.lineEdit.setClearButtonEnabled(False)
-
-        self.verticalLayout_4.addWidget(self.lineEdit)
-
-        self.listWidget = QListWidget(self.starsTab)
-        self.listWidget.setObjectName(u"listWidget")
-
-        self.verticalLayout_4.addWidget(self.listWidget)
-
         icon2 = QIcon()
         icon2.addFile(u"../resources/icons/dark star.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.mainTabWidget.addTab(self.starsTab, icon2, "")
+        self.mainTabWidget.addTab(self.localTab, icon2, "")
 
         self.verticalLayout.addWidget(self.mainTabWidget)
 
@@ -175,6 +167,8 @@ class Ui_MainWindow(object):
         self.menuHelp.addAction(self.actionAyuda)
         self.menuHelp.addSeparator()
         self.menuHelp.addAction(self.actionAbout)
+        self.menuMenu.addAction(self.actionReload)
+        self.menuMenu.addSeparator()
         self.menuMenu.addAction(self.actionExit)
 
         self.retranslateUi(MainWindow)
@@ -189,6 +183,10 @@ class Ui_MainWindow(object):
         self.actionAbout.setText(QCoreApplication.translate("MainWindow", u"Acerca de", None))
         self.actionAyuda.setText(QCoreApplication.translate("MainWindow", u"Ayuda de GitHub Manager", None))
         self.actionExit.setText(QCoreApplication.translate("MainWindow", u"Exit", None))
+        self.actionReload.setText(QCoreApplication.translate("MainWindow", u"Reload", None))
+        # if QT_CONFIG(shortcut)
+        self.actionReload.setShortcut(QCoreApplication.translate("MainWindow", u"Ctrl+R", None))
+        # endif // QT_CONFIG(shortcut)
         self.profileImageLabel.setText("")
         self.nameLabel.setText(QCoreApplication.translate("MainWindow", u"name", None))
         self.userNameLabel.setText(QCoreApplication.translate("MainWindow", u"username", None))
@@ -197,9 +195,8 @@ class Ui_MainWindow(object):
                                       QCoreApplication.translate("MainWindow", u"Overview", None))
         self.mainTabWidget.setTabText(self.mainTabWidget.indexOf(self.repositoriesTab),
                                       QCoreApplication.translate("MainWindow", u"Repositories", None))
-        self.lineEdit.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Search stars", None))
-        self.mainTabWidget.setTabText(self.mainTabWidget.indexOf(self.starsTab),
-                                      QCoreApplication.translate("MainWindow", u"Stars", None))
+        self.mainTabWidget.setTabText(self.mainTabWidget.indexOf(self.localTab),
+                                      QCoreApplication.translate("MainWindow", u"Local", None))
         self.menuHelp.setTitle(QCoreApplication.translate("MainWindow", u"Help", None))
         self.menuMenu.setTitle(QCoreApplication.translate("MainWindow", u"Menu", None))
     # retranslateUi

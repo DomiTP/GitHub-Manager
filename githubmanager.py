@@ -56,6 +56,7 @@ class GitHubManager(QMainWindow):
 
         self.ui.actionExit.triggered.connect(self.close)
         self.ui.actionAbout.triggered.connect(lambda x: self.about.show())
+        self.ui.actionReload.triggered.connect(self.reload)
 
     def load_repositories(self):
         """
@@ -111,6 +112,10 @@ class GitHubManager(QMainWindow):
         image = QImage()
         image.loadFromData(requests.get(user_data.avatar_url).content)
         self.ui.profileImageLabel.setPixmap(QPixmap(image).scaled(QSize(120, 120), Qt.KeepAspectRatio))
+
+    def reload(self):
+        self.load_user_info()
+        self.load_repositories()
 
     def closeEvent(self, event):
         """

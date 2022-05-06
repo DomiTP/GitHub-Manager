@@ -52,6 +52,7 @@ class Login(QMainWindow):
         self.ui.githubAccesTokenButton.clicked.connect(self.get_access_token)
         self.ui.signInButton.clicked.connect(self.login)
         self.ui.signInButton.setShortcut("Return")
+        self.ui.signInButton.setShortcut("Enter")
 
         self.ui.tokenLineEdit.textChanged.connect(self.check_text)
         self.ui.signInButton.setDisabled(True)

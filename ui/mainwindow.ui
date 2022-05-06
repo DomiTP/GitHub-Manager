@@ -185,29 +185,16 @@
           <string>Repositories</string>
          </attribute>
         </widget>
-        <widget class="QWidget" name="starsTab">
-         <attribute name="icon">
-          <iconset>
-           <normaloff>../resources/icons/dark star.png</normaloff>../resources/icons/dark star.png</iconset>
-         </attribute>
-         <attribute name="title">
-          <string>Stars</string>
-         </attribute>
-         <layout class="QVBoxLayout" name="verticalLayout_4">
-          <item>
-           <widget class="QLineEdit" name="lineEdit">
-            <property name="placeholderText">
-             <string>Search stars</string>
-            </property>
-            <property name="clearButtonEnabled">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QListWidget" name="listWidget"/>
-          </item>
-         </layout>
+        <widget class="QWidget" name="localTab">
+            <attribute name="icon">
+                <iconset>
+                    <normaloff>../resources/icons/dark star.png</normaloff>../resources/icons/dark star.png
+                </iconset>
+            </attribute>
+            <attribute name="title">
+                <string>Local</string>
+            </attribute>
+            <layout class="QVBoxLayout" name="verticalLayout_4"/>
         </widget>
        </widget>
       </item>
@@ -232,12 +219,14 @@
     <addaction name="separator"/>
     <addaction name="actionAbout"/>
    </widget>
-   <widget class="QMenu" name="menuMenu">
-    <property name="title">
-     <string>Menu</string>
-    </property>
-    <addaction name="actionExit"/>
-   </widget>
+      <widget class="QMenu" name="menuMenu">
+          <property name="title">
+              <string>Menu</string>
+          </property>
+          <addaction name="actionReload"/>
+          <addaction name="separator"/>
+          <addaction name="actionExit"/>
+      </widget>
    <addaction name="menuMenu"/>
    <addaction name="menuHelp"/>
   </widget>
@@ -247,16 +236,24 @@
     <string>Acerca de</string>
    </property>
   </action>
-  <action name="actionAyuda">
-   <property name="text">
-    <string>Ayuda de GitHub Manager</string>
-   </property>
-  </action>
-  <action name="actionExit">
-   <property name="text">
-    <string>Exit</string>
-   </property>
-  </action>
+     <action name="actionAyuda">
+         <property name="text">
+             <string>Ayuda de GitHub Manager</string>
+         </property>
+     </action>
+     <action name="actionExit">
+         <property name="text">
+             <string>Exit</string>
+         </property>
+     </action>
+     <action name="actionReload">
+         <property name="text">
+             <string>Reload</string>
+         </property>
+         <property name="shortcut">
+             <string>Ctrl+R</string>
+         </property>
+     </action>
  </widget>
  <customwidgets>
   <customwidget>

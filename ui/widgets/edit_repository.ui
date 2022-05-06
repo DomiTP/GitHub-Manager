@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+    <class>RepositoryEdit</class>
+    <widget class="QWidget" name="RepositoryEdit">
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>400</width>
+                <height>261</height>
+            </rect>
+        </property>
+        <property name="windowTitle">
+            <string>Edit repository</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout">
+            <item>
+                <widget class="QLabel" name="label">
+                    <property name="sizePolicy">
+                        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="font">
+                        <font>
+                            <pointsize>16</pointsize>
+                            <bold>true</bold>
+                        </font>
+                    </property>
+                    <property name="text">
+                        <string>Edit repository</string>
+                    </property>
+                </widget>
+            </item>
+            <item>
+                <layout class="QFormLayout" name="formLayout">
+                    <item row="0" column="0">
+                        <widget class="QLabel" name="nameLabel">
+                            <property name="text">
+                                <string>Name</string>
+                            </property>
+                        </widget>
+                    </item>
+                    <item row="0" column="1">
+                        <widget class="QLineEdit" name="nameLineEdit"/>
+                    </item>
+                    <item row="1" column="0">
+                        <widget class="QLabel" name="descriptionLabel">
+                            <property name="text">
+                                <string>Description</string>
+                            </property>
+                        </widget>
+                    </item>
+                    <item row="1" column="1">
+                        <widget class="QLineEdit" name="descriptionLineEdit"/>
+                    </item>
+                    <item row="2" column="0">
+                        <widget class="QLabel" name="homePageLabel">
+                            <property name="text">
+                                <string>Home Page</string>
+                            </property>
+                        </widget>
+                    </item>
+                    <item row="2" column="1">
+                        <widget class="QLineEdit" name="homePageLineEdit"/>
+                    </item>
+                    <item row="3" column="0">
+                        <widget class="QLabel" name="privateLabel">
+                            <property name="text">
+                                <string>Private</string>
+                            </property>
+                        </widget>
+                    </item>
+                    <item row="3" column="1">
+                        <widget class="QCheckBox" name="privateCheckBox"/>
+                    </item>
+                    <item row="4" column="0">
+                        <widget class="QLabel" name="defaultBranchLabel">
+                            <property name="text">
+                                <string>Default Branch</string>
+                            </property>
+                        </widget>
+                    </item>
+                    <item row="4" column="1">
+                        <widget class="QComboBox" name="defaultBranchComboBox"/>
+                    </item>
+                </layout>
+            </item>
+            <item>
+                <spacer name="verticalSpacer">
+                    <property name="orientation">
+                        <enum>Qt::Vertical</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                        <size>
+                            <width>20</width>
+                            <height>40</height>
+                        </size>
+                    </property>
+                </spacer>
+            </item>
+            <item>
+                <layout class="QHBoxLayout" name="horizontalLayout">
+                    <property name="sizeConstraint">
+                        <enum>QLayout::SetDefaultConstraint</enum>
+                    </property>
+                    <item>
+                        <widget class="QPushButton" name="acceptButton">
+                            <property name="text">
+                                <string>Accept</string>
+                            </property>
+                        </widget>
+                    </item>
+                    <item>
+                        <widget class="QPushButton" name="cancelButton">
+                            <property name="text">
+                                <string>Cancel</string>
+                            </property>
+                        </widget>
+                    </item>
+                </layout>
+            </item>
+        </layout>
+    </widget>
+    <resources/>
+    <connections/>
+</ui>
