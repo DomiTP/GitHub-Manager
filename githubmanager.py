@@ -5,7 +5,7 @@ from PySide6.QtCore import QSize
 from PySide6.QtGui import QIcon, QPixmap, QImage, Qt
 from PySide6.QtWidgets import QMainWindow, QApplication, QVBoxLayout
 
-from modules import Login, About, User, Repositories
+from modules import Login, About, Repositories
 from ui import Ui_MainWindow
 from utils import LOGO, time
 
@@ -35,13 +35,12 @@ class GitHubManager(QMainWindow):
 
         self.config()
 
-    def start(self, github, user):
+    def start(self, user):
         """
         Loads the user's information and repositories.
-        :param github:
         :param user:
         """
-        self.user = User(github, user)
+        self.user = user
 
         self.load_user_info()
         self.load_repositories()

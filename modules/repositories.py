@@ -41,5 +41,5 @@ class Repositories(QWidget):
         """
         item = self.ui.listWidget.currentItem()
         repo_name = item.toolTip()
-        self.open_repo = Repository(self.user.user.get_repo(repo_name), self.user.get_data())
+        self.open_repo = Repository(self.user.user.get_repo(repo_name), self.user)
         self.open_repo.show()

@@ -6,6 +6,7 @@ from PySide6.QtWidgets import QWidget
 from github.AuthenticatedUser import AuthenticatedUser
 from github.Commit import Commit
 
+from modules import User
 from ui.widgets import Ui_repository
 from utils import time
 from widgets import CloneTemplate, FileTemplate, RepositoryListWidgetItem, EditRepository
@@ -19,10 +20,11 @@ class Repository(QWidget):
 
         self.repository = repo
 
-        self.code = CloneTemplate(self.repository)
-        self.edit_repo = QWidget()
+        self.user: User = user
+        self.authenticated_user: AuthenticatedUser = user.get_data()
 
-        self.user: AuthenticatedUser = user
+        self.code = CloneTemplate(self.repository, self.user)
+        self.edit_repo = QWidget()
 
         self.config_ui()
         self.load_data()
@@ -151,9 +153,9 @@ class Repository(QWidget):
         People subscribed to this repo
         """
         self.ui.watchButton.setText("Unwatch " + str(self.repository.subscribers_count)
-                                    if self.repository in self.user.get_watched()
+                                    if self.repository in self.authenticated_user.get_watched()
                                     else "Watch " + str(self.repository.subscribers_count))
-        self.ui.watchButton.setIcon(qta.icon("ei.eye-close") if self.repository in self.user.get_watched()
+        self.ui.watchButton.setIcon(qta.icon("ei.eye-close") if self.repository in self.authenticated_user.get_watched()
                                     else qta.icon("ei.eye-open"))
 
         self.ui.watchingWidget.setText(str(self.repository.subscribers_count) + " watching")
@@ -163,17 +165,17 @@ class Repository(QWidget):
         """
         Watch/Unwatch repository
         """
-        if self.repository in self.user.get_watched():
-            self.user.remove_from_watched(self.repository)
+        if self.repository in self.authenticated_user.get_watched():
+            self.authenticated_user.remove_from_watched(self.repository)
         else:
-            self.user.add_to_watched(self.repository)
+            self.authenticated_user.add_to_watched(self.repository)
         self.watch()
 
     def fork(self):
         """
         Fork repository and forks count
         """
-        if self.repository in self.user.get_repos():
+        if self.repository in self.authenticated_user.get_repos():
             self.ui.forkButton.setDisabled(True)
             self.ui.forkButton.setToolTip("You own this repository")
 
@@ -189,7 +191,7 @@ class Repository(QWidget):
         """
         Fork repository
         """
-        self.user.create_fork(self.repository)
+        self.authenticated_user.create_fork(self.repository)
         self.fork()
 
     def star(self):
@@ -197,10 +199,11 @@ class Repository(QWidget):
         Star repository and stars count
         """
         self.ui.starButton.setText("Starred " + str(self.repository.stargazers_count)
-                                   if self.repository in self.user.get_starred()
+                                   if self.repository in self.authenticated_user.get_starred()
                                    else "Star " + str(self.repository.stargazers_count))
         self.ui.starButton.setIcon(QPixmap(
-            qta.icon("fa5s.star", color='orange').pixmap(15, 15) if self.repository in self.user.get_starred()
+            qta.icon("fa5s.star", color='orange').pixmap(15, 15)
+            if self.repository in self.authenticated_user.get_starred()
             else qta.icon("fa5s.star").pixmap(15, 15)))
 
         self.ui.starWidget.setText(
@@ -212,8 +215,8 @@ class Repository(QWidget):
         """
         Star repository
         """
-        if self.repository in self.user.get_starred():
-            self.user.remove_from_starred(self.repository)
+        if self.repository in self.authenticated_user.get_starred():
+            self.authenticated_user.remove_from_starred(self.repository)
         else:
-            self.user.add_to_starred(self.repository)
+            self.authenticated_user.add_to_starred(self.repository)
         self.star()

@@ -9,8 +9,10 @@
 ################################################################################
 
 from PySide6.QtCore import (QCoreApplication, QMetaObject)
-from PySide6.QtWidgets import (QHBoxLayout, QLineEdit, QPushButton,
-                               QSizePolicy, QTabWidget, QVBoxLayout, QWidget)
+from PySide6.QtGui import (QFont)
+from PySide6.QtWidgets import (QHBoxLayout, QLabel, QLineEdit,
+                               QPushButton, QSizePolicy, QTabWidget, QVBoxLayout,
+                               QWidget)
 
 from widgets.IconLabel import IconLabel
 
@@ -19,7 +21,7 @@ class Ui_Clone(object):
     def setupUi(self, Clone):
         if not Clone.objectName():
             Clone.setObjectName(u"Clone")
-        Clone.resize(391, 113)
+        Clone.resize(441, 162)
         self.verticalLayout = QVBoxLayout(Clone)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.cloneWidget = IconLabel(Clone)
@@ -73,6 +75,40 @@ class Ui_Clone(object):
         self.horizontalLayout_2.addWidget(self.sshCopyButton)
 
         self.tabWidget.addTab(self.ssh, "")
+        self.cloneTab = QWidget()
+        self.cloneTab.setObjectName(u"cloneTab")
+        self.verticalLayout_2 = QVBoxLayout(self.cloneTab)
+        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
+        self.savePathLabel = QLabel(self.cloneTab)
+        self.savePathLabel.setObjectName(u"savePathLabel")
+        font = QFont()
+        font.setBold(True)
+        self.savePathLabel.setFont(font)
+
+        self.verticalLayout_2.addWidget(self.savePathLabel)
+
+        self.horizontalLayout_4 = QHBoxLayout()
+        self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
+        self.repoSavePathLineEdit = QLineEdit(self.cloneTab)
+        self.repoSavePathLineEdit.setObjectName(u"repoSavePathLineEdit")
+
+        self.horizontalLayout_4.addWidget(self.repoSavePathLineEdit)
+
+        self.selectDirectoryButton = QPushButton(self.cloneTab)
+        self.selectDirectoryButton.setObjectName(u"selectDirectoryButton")
+
+        self.horizontalLayout_4.addWidget(self.selectDirectoryButton)
+
+        self.verticalLayout_2.addLayout(self.horizontalLayout_4)
+
+        self.cloneButton = QPushButton(self.cloneTab)
+        self.cloneButton.setObjectName(u"cloneButton")
+        sizePolicy.setHeightForWidth(self.cloneButton.sizePolicy().hasHeightForWidth())
+        self.cloneButton.setSizePolicy(sizePolicy)
+
+        self.verticalLayout_2.addWidget(self.cloneButton)
+
+        self.tabWidget.addTab(self.cloneTab, "")
 
         self.horizontalLayout.addWidget(self.tabWidget)
 
@@ -82,8 +118,8 @@ class Ui_Clone(object):
 
         self.tabWidget.setCurrentIndex(0)
 
-        QMetaObject.connectSlotsByName(Clone)
 
+        QMetaObject.connectSlotsByName(Clone)
     # setupUi
 
     def retranslateUi(self, Clone):
@@ -93,4 +129,15 @@ class Ui_Clone(object):
                                   QCoreApplication.translate("Clone", u"HTTPS", None))
         self.sshCopyButton.setText("")
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.ssh), QCoreApplication.translate("Clone", u"SSH", None))
+        self.savePathLabel.setText(QCoreApplication.translate("Clone", u"Save path:", None))
+        # if QT_CONFIG(tooltip)
+        self.repoSavePathLineEdit.setToolTip(QCoreApplication.translate("Clone",
+                                                                        u"<html><head/><body><p>Path where the repository will be saved.</p><p>Ex: C:\\Users\\User</p><p>Cloning automatically creates a folder with the name of the repository.</p></body></html>",
+                                                                        None))
+        # endif // QT_CONFIG(tooltip)
+        self.selectDirectoryButton.setText(QCoreApplication.translate("Clone", u"Select directory", None))
+        self.cloneButton.setText(QCoreApplication.translate("Clone", u"Clone", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.cloneTab),
+                                  QCoreApplication.translate("Clone", u"CLONE", None))
     # retranslateUi
+

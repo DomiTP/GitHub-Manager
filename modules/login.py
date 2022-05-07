@@ -7,6 +7,7 @@ from PySide6.QtWidgets import QMainWindow, QLineEdit
 from github import Github, BadCredentialsException
 
 from modules import About
+from modules.user import User
 from ui import Ui_GitHubManagerLogin
 from utils import LOGO, get_icon
 from widgets import CustomWebEnginePage
@@ -87,13 +88,13 @@ class Login(QMainWindow):
 
     def login(self):
         """
-        Login to with the token
+        Login with the token
         :return:
         """
         try:
             github = Github(self.ui.tokenLineEdit.text())
             user = github.get_user()
-            self.main_window.start(github, user)
+            self.main_window.start(User(github, user, self.ui.tokenLineEdit.text()))
             self.hide()
         except BadCredentialsException:
             self.ui.errorWidget.setText("Invalid token")

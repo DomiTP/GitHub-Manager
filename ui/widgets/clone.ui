@@ -6,12 +6,12 @@
             <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>391</width>
-                <height>113</height>
+                <width>441</width>
+                <height>162</height>
             </rect>
         </property>
         <property name="windowTitle">
-            <string>Form</string>
+            <string>Clone</string>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout">
             <item>
@@ -82,6 +82,60 @@
                                             </property>
                                             <property name="text">
                                                 <string/>
+                                            </property>
+                                        </widget>
+                                    </item>
+                                </layout>
+                            </widget>
+                            <widget class="QWidget" name="cloneTab">
+                                <attribute name="title">
+                                    <string>CLONE</string>
+                                </attribute>
+                                <layout class="QVBoxLayout" name="verticalLayout_2">
+                                    <item>
+                                        <widget class="QLabel" name="savePathLabel">
+                                            <property name="font">
+                                                <font>
+                                                    <bold>true</bold>
+                                                </font>
+                                            </property>
+                                            <property name="text">
+                                                <string>Save path:</string>
+                                            </property>
+                                        </widget>
+                                    </item>
+                                    <item>
+                                        <layout class="QHBoxLayout" name="horizontalLayout_4">
+                                            <item>
+                                                <widget class="QLineEdit" name="repoSavePathLineEdit">
+                                                    <property name="toolTip">
+                                                        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Path where
+                                                            the repository will be saved.&lt;/p&gt;&lt;p&gt;Ex:
+                                                            C:\Users\User&lt;/p&gt;&lt;p&gt;Cloning automatically
+                                                            creates a folder with the name of the repository.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
+                                                        </string>
+                                                    </property>
+                                                </widget>
+                                            </item>
+                                            <item>
+                                                <widget class="QPushButton" name="selectDirectoryButton">
+                                                    <property name="text">
+                                                        <string>Select directory</string>
+                                                    </property>
+                                                </widget>
+                                            </item>
+                                        </layout>
+                                    </item>
+                                    <item>
+                                        <widget class="QPushButton" name="cloneButton">
+                                            <property name="sizePolicy">
+                                                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                                                    <horstretch>0</horstretch>
+                                                    <verstretch>0</verstretch>
+                                                </sizepolicy>
+                                            </property>
+                                            <property name="text">
+                                                <string>Clone</string>
                                             </property>
                                         </widget>
                                     </item>

@@ -1,14 +1,16 @@
+import pygit2 as pygit2
 from github.AuthenticatedUser import AuthenticatedUser
 from github.NamedUser import NamedUser
 from github.PaginatedList import PaginatedList
 
 
 class User:
-    def __init__(self, github, user):
+    def __init__(self, github, user, token):
         self.github = github
         self.user: AuthenticatedUser = user
         self.named_user: NamedUser = self.github.get_user(self.user.login)
         self.repos = None
+        self.pygit_callback = pygit2.RemoteCallbacks(pygit2.UserPass(token, 'x-oauth-basic'))
 
     def generate_repos(self):
         """
