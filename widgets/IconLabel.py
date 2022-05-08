@@ -26,12 +26,14 @@ class IconLabel(QWidget):
         if final_stretch:
             layout.addStretch()
 
-    def set_icon(self, qta_id):
+    def set_icon(self, qta_id, color="black", size=IconSize):
         """
         Set the icon to the label with the given qta_id.
         :param qta_id: The qta_id of the icon.
+        :param color:  The color of the icon.
+        :param size:  The size of the icon.
         """
-        self.icon.setPixmap(qta.icon(qta_id).pixmap(self.IconSize))
+        self.icon.setPixmap(qta.icon(qta_id, color=color).pixmap(size))
 
     def setText(self, text):
         """
@@ -40,7 +42,7 @@ class IconLabel(QWidget):
         """
         self.label.setText(text)
 
-    def set_style(self, color=None, font_size=None, bold=False, italic=False, underline=False, font_family=None):
+    def set_text_style(self, color=None, font_size=None, bold=False, italic=False, underline=False, font_family=None):
         """
         Set the style of the label.
         :param color:  The color of the text.

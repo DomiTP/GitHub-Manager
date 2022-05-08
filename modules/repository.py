@@ -2,14 +2,14 @@ import qtawesome as qta
 import requests
 from PySide6.QtCore import QUrl, QSize
 from PySide6.QtGui import QPixmap, QDesktopServices, QIcon, QImage
-from PySide6.QtWidgets import QWidget
+from PySide6.QtWidgets import QWidget, QListWidgetItem
 from github.AuthenticatedUser import AuthenticatedUser
 from github.Commit import Commit
 
 from modules import User
 from ui.widgets import Ui_repository
-from utils import time
-from widgets import CloneTemplate, FileTemplate, RepositoryListWidgetItem, EditRepository
+from utils import time_formatter
+from widgets import CloneTemplate, FileTemplate, RepositoryListWidgetItem, EditRepository, IssueTemplate
 
 
 class Repository(QWidget):
@@ -23,12 +23,13 @@ class Repository(QWidget):
         self.user: User = user
         self.authenticated_user: AuthenticatedUser = user.get_data()
 
-        self.code = CloneTemplate(self.repository, self.user)
+        self.clone = CloneTemplate(self.repository, self.user)
         self.edit_repo = QWidget()
 
         self.config_ui()
         self.load_data()
         self.load_code_data()
+        self.load_issues()
 
     def load_data(self):
         """
@@ -60,7 +61,7 @@ class Repository(QWidget):
         self.ui.configButton.setIcon(QIcon(qta.icon("ei.cog").pixmap(20, 20)))
 
         self.ui.descLabel.setText(self.repository.description)
-        self.ui.codeButton.clicked.connect(lambda: self.code.show())
+        self.ui.codeButton.clicked.connect(lambda: self.clone.show())
         self.ui.branchComboBox.currentTextChanged.connect(self.branch_changed)
         self.ui.filesListWidget.itemClicked.connect(self.on_click)
         self.ui.configButton.clicked.connect(self.edit_repo_window)
@@ -83,9 +84,18 @@ class Repository(QWidget):
         last_commit: Commit = commits[0]
         self.ui.commitLabel.setText(last_commit.commit.message)
         self.ui.numsLabel.setText(last_commit.commit.sha[:7])
-        self.ui.timeLabel.setText(time("", last_commit.commit.author.date))
+        self.ui.timeLabel.setText(time_formatter("", last_commit.commit.author.date))
         self.ui.commitsWidget.setText(
             str(commits.totalCount) + " commit" if commits.totalCount == 1 else str(commits.totalCount) + " commits")
+
+    def load_issues(self):
+        issues = self.repository.get_issues()
+        for issue in issues:
+            item = QListWidgetItem()
+            widget = IssueTemplate(issue)
+            item.setSizeHint(widget.sizeHint())
+            self.ui.issuesListWidget.addItem(item)
+            self.ui.issuesListWidget.setItemWidget(item, widget)
 
     def branch_changed(self, branch_name):
         """

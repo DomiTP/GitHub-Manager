@@ -5,7 +5,7 @@ from github.AuthenticatedUser import AuthenticatedUser
 from github.Repository import Repository
 
 from ui.widgets import Ui_RepositoryTemplate
-from utils import get_icon, time
+from utils import get_icon, time_formatter
 
 
 class RepositoryTemplate(QWidget):
@@ -32,7 +32,7 @@ class RepositoryTemplate(QWidget):
             self.ui.licenseNameLabel.setText(self.repo.get_license().license.name)
         except Exception:
             self.ui.licenseNameLabel.setText("None")
-        self.ui.updatedLabel.setText(time("Updated", self.repo.updated_at))
+        self.ui.updatedLabel.setText(time_formatter("Updated", self.repo.updated_at))
         self.ui.updatedLabel.setToolTip(self.repo.updated_at.strftime("%d-%m-%Y %H:%M:%S") + " UTC")
         self.ui.starButton.setText("Star" if self.repo.stargazers_count == 0 else "Starred")
 

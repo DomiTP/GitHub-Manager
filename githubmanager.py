@@ -7,7 +7,7 @@ from PySide6.QtWidgets import QMainWindow, QApplication, QVBoxLayout
 
 from modules import Login, About, Repositories
 from ui import Ui_MainWindow
-from utils import LOGO, time
+from utils import LOGO, time_formatter
 
 try:
     from ctypes import windll  # Only exists on Windows.
@@ -103,7 +103,7 @@ class GitHubManager(QMainWindow):
             self.ui.twitterWidget.hide()
 
         if user_data.created_at:
-            self.ui.joinedWidget.setText(time("Joined", user_data.created_at))
+            self.ui.joinedWidget.setText(time_formatter("Joined", user_data.created_at))
             self.ui.joinedWidget.set_icon("fa5s.clock")
         else:
             self.ui.joinedWidget.hide()

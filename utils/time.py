@@ -1,7 +1,7 @@
 from datetime import datetime
 
 
-def time(text, difference_time):
+def time_formatter(text, difference_time):
     """
     Calculate the time difference between two times and return the result in human-readable format.
     :param text:  The text to print before the time.

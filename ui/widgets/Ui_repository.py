@@ -21,7 +21,7 @@ class Ui_repository(object):
     def setupUi(self, repository):
         if not repository.objectName():
             repository.setObjectName(u"repository")
-        repository.resize(936, 643)
+        repository.resize(936, 640)
         self.verticalLayout = QVBoxLayout(repository)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.horizontalLayout_5 = QHBoxLayout()
@@ -156,12 +156,14 @@ class Ui_repository(object):
 
         self.horizontalLayout_4.addWidget(self.commitsWidget)
 
+
         self.verticalLayout_2.addWidget(self.frame)
 
         self.filesListWidget = QListWidget(self.code)
         self.filesListWidget.setObjectName(u"filesListWidget")
 
         self.verticalLayout_2.addWidget(self.filesListWidget)
+
 
         self.horizontalLayout.addLayout(self.verticalLayout_2)
 
@@ -258,6 +260,13 @@ class Ui_repository(object):
         self.tabWidget.addTab(self.code, "")
         self.issues = QWidget()
         self.issues.setObjectName(u"issues")
+        self.verticalLayout_4 = QVBoxLayout(self.issues)
+        self.verticalLayout_4.setObjectName(u"verticalLayout_4")
+        self.issuesListWidget = QListWidget(self.issues)
+        self.issuesListWidget.setObjectName(u"issuesListWidget")
+
+        self.verticalLayout_4.addWidget(self.issuesListWidget)
+
         self.tabWidget.addTab(self.issues, "")
 
         self.verticalLayout.addWidget(self.tabWidget)

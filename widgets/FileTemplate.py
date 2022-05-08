@@ -2,6 +2,7 @@ from PySide6.QtWidgets import QWidget
 from github.ContentFile import ContentFile
 
 from ui.widgets import Ui_FileTemplate
+from utils import format_file_size
 
 
 class FileTemplate(QWidget):
@@ -11,7 +12,6 @@ class FileTemplate(QWidget):
         self.ui.setupUi(self)
 
         self.content: ContentFile = content
-        # self.commit = repo.get_commit(self.content.sha)
 
         self.fill()
 
@@ -21,5 +21,6 @@ class FileTemplate(QWidget):
         """
         self.ui.nameWidget.setText(self.content.name)
         self.ui.nameWidget.set_icon("fa5s.file-alt" if self.content.type == "file" else "fa5s.folder")
-        # self.ui.commitLabel.setText(self.commit.message)
-        # self.ui.label.setText(time("", self.commit.author.date))
+        self.ui.sizeLabel.setText(str(format_file_size(self.content.size, "B", "KB")) + " KB")
+        if self.content.type == "dir":
+            self.ui.sizeLabel.setText("")

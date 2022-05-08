@@ -39,6 +39,13 @@ def check_if_repo_exists(repo_path):
 
 
 def clone(clone_url, clone_path, user):
+    """
+    Clone the repository to the specified path
+    :param clone_url:  URL of the repository
+    :param clone_path:  Path to save the repository
+    :param user:  User info to obtain the pygit callback to clone private repositories
+    :return:
+    """
     res = True, ""
     repo_name = clone_url.split('.git')[0].split('/')[-1]
     full_path = os.path.join(clone_path, repo_name)

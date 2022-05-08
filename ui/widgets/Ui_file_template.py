@@ -18,7 +18,7 @@ class Ui_FileTemplate(object):
     def setupUi(self, FileTemplate):
         if not FileTemplate.objectName():
             FileTemplate.setObjectName(u"FileTemplate")
-        FileTemplate.resize(200, 34)
+        FileTemplate.resize(440, 34)
         self.horizontalLayout = QHBoxLayout(FileTemplate)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.nameWidget = IconLabel(FileTemplate)
@@ -26,26 +26,20 @@ class Ui_FileTemplate(object):
 
         self.horizontalLayout.addWidget(self.nameWidget)
 
-        self.commitLabel = QLabel(FileTemplate)
-        self.commitLabel.setObjectName(u"commitLabel")
+        self.sizeLabel = QLabel(FileTemplate)
+        self.sizeLabel.setObjectName(u"sizeLabel")
+        self.sizeLabel.setLayoutDirection(Qt.LeftToRight)
+        self.sizeLabel.setAlignment(Qt.AlignRight | Qt.AlignTrailing | Qt.AlignVCenter)
 
-        self.horizontalLayout.addWidget(self.commitLabel)
-
-        self.label = QLabel(FileTemplate)
-        self.label.setObjectName(u"label")
-        self.label.setLayoutDirection(Qt.LeftToRight)
-        self.label.setAlignment(Qt.AlignRight | Qt.AlignTrailing | Qt.AlignVCenter)
-
-        self.horizontalLayout.addWidget(self.label)
+        self.horizontalLayout.addWidget(self.sizeLabel)
 
         self.retranslateUi(FileTemplate)
 
         QMetaObject.connectSlotsByName(FileTemplate)
-
     # setupUi
 
     def retranslateUi(self, FileTemplate):
         FileTemplate.setWindowTitle(QCoreApplication.translate("FileTemplate", u"Form", None))
-        self.commitLabel.setText(QCoreApplication.translate("FileTemplate", u"commit info", None))
-        self.label.setText(QCoreApplication.translate("FileTemplate", u"lastModifiedLabel", None))
+        self.sizeLabel.setText(QCoreApplication.translate("FileTemplate", u"size", None))
     # retranslateUi
+

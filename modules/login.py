@@ -99,7 +99,7 @@ class Login(QMainWindow):
         except BadCredentialsException:
             self.ui.errorWidget.setText("Invalid token")
             self.ui.errorWidget.set_icon("fa5s.exclamation-triangle")
-            self.ui.errorWidget.set_style(color="red", font_size=13, bold=True)
+            self.ui.errorWidget.set_text_style(color="red", font_size=13, bold=True)
             self.ui.errorWidget.show()
 
     def get_access_token(self):
