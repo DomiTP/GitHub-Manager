@@ -52,7 +52,7 @@ class CloneTemplate(QWidget):
         """
         Repository save path
         """
-        new_route = QFileDialog.getExistingDirectory(self, "Seleccionar carpeta", str(USER_HOME_PATH))
+        new_route = QFileDialog.getExistingDirectory(self, "Select folder", str(USER_HOME_PATH))
         if new_route:
             self.ui.repoSavePathLineEdit.setText(new_route)
 

@@ -5,5 +5,7 @@ from .FileTemplate import *
 from .HyperlinkLabel import *
 from .IconLabel import *
 from .IssueTemplate import *
+from .LocalRepositoryListWidgetItem import *
+from .MplCanvas import *
 from .RepositoryListWidgetItem import *
 from .RepositoryTemplate import *

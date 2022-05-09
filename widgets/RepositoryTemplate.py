@@ -32,7 +32,7 @@ class RepositoryTemplate(QWidget):
             self.ui.licenseNameLabel.setText(self.repo.get_license().license.name)
         except Exception:
             self.ui.licenseNameLabel.setText("None")
-        self.ui.updatedLabel.setText(time_formatter("Updated", self.repo.updated_at))
+        self.ui.updatedLabel.setText(time_formatter("Updated", time2=self.repo.updated_at))
         self.ui.updatedLabel.setToolTip(self.repo.updated_at.strftime("%d-%m-%Y %H:%M:%S") + " UTC")
         self.ui.starButton.setText("Star" if self.repo.stargazers_count == 0 else "Starred")
 

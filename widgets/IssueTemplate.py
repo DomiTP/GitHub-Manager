@@ -31,5 +31,5 @@ class IssueTemplate(QWidget):
             self.ui.labelsLayout.addWidget(label_label)
 
         self.ui.issueNumberLabel.setText("#" + str(self.issue.number))
-        self.ui.openedLabel.setText(time_formatter("opened", self.issue.created_at))
+        self.ui.openedLabel.setText(time_formatter("opened", time2=self.issue.created_at))
         self.ui.byLabel.setText("by " + self.issue.user.login)

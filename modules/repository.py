@@ -84,7 +84,7 @@ class Repository(QWidget):
         last_commit: Commit = commits[0]
         self.ui.commitLabel.setText(last_commit.commit.message)
         self.ui.numsLabel.setText(last_commit.commit.sha[:7])
-        self.ui.timeLabel.setText(time_formatter("", last_commit.commit.author.date))
+        self.ui.timeLabel.setText(time_formatter("", time2=last_commit.commit.author.date))
         self.ui.commitsWidget.setText(
             str(commits.totalCount) + " commit" if commits.totalCount == 1 else str(commits.totalCount) + " commits")
 

@@ -12,9 +12,9 @@ from PySide6.QtCore import (QCoreApplication, QMetaObject, QRect,
                             QSize, Qt)
 from PySide6.QtGui import (QAction, QFont, QIcon)
 from PySide6.QtWidgets import (QHBoxLayout, QLabel, QLayout,
-                               QMenu, QMenuBar, QSizePolicy,
-                               QSpacerItem, QStatusBar, QTabWidget, QVBoxLayout,
-                               QWidget)
+                               QMenu, QMenuBar, QPushButton,
+                               QSizePolicy, QSpacerItem, QStatusBar, QTabWidget,
+                               QVBoxLayout, QWidget)
 
 from widgets.IconLabel import IconLabel
 
@@ -113,6 +113,12 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_2.addItem(self.verticalSpacer)
 
+        self.infoButton = QPushButton(self.centralwidget)
+        self.infoButton.setObjectName(u"infoButton")
+        sizePolicy.setHeightForWidth(self.infoButton.sizePolicy().hasHeightForWidth())
+        self.infoButton.setSizePolicy(sizePolicy)
+
+        self.verticalLayout_2.addWidget(self.infoButton)
 
         self.horizontalLayout.addLayout(self.verticalLayout_2)
 
@@ -139,13 +145,12 @@ class Ui_MainWindow(object):
         self.mainTabWidget.addTab(self.repositoriesTab, icon1, "")
         self.localTab = QWidget()
         self.localTab.setObjectName(u"localTab")
-        self.verticalLayout_4 = QVBoxLayout(self.localTab)
-        self.verticalLayout_4.setObjectName(u"verticalLayout_4")
         icon2 = QIcon()
         icon2.addFile(u"../resources/icons/dark star.png", QSize(), QIcon.Normal, QIcon.Off)
         self.mainTabWidget.addTab(self.localTab, icon2, "")
 
         self.verticalLayout.addWidget(self.mainTabWidget)
+
 
         self.horizontalLayout.addLayout(self.verticalLayout)
 
@@ -191,6 +196,7 @@ class Ui_MainWindow(object):
         self.nameLabel.setText(QCoreApplication.translate("MainWindow", u"name", None))
         self.userNameLabel.setText(QCoreApplication.translate("MainWindow", u"username", None))
         self.bioLabel.setText(QCoreApplication.translate("MainWindow", u"bio", None))
+        self.infoButton.setText("")
         self.mainTabWidget.setTabText(self.mainTabWidget.indexOf(self.overviewTab),
                                       QCoreApplication.translate("MainWindow", u"Overview", None))
         self.mainTabWidget.setTabText(self.mainTabWidget.indexOf(self.repositoriesTab),

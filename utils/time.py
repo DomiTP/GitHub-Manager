@@ -1,19 +1,21 @@
 from datetime import datetime
 
 
-def time_formatter(text, difference_time):
+def time_formatter(text, time1=datetime.utcnow(), time2=datetime.utcnow(), suffix="ago"):
     """
     Calculate the time difference between two times and return the result in human-readable format.
     :param text:  The text to print before the time.
-    :param difference_time:  The time to calculate the difference from.
+    :param time1: The first time.
+    :param time2:  The time to calculate the difference from.
+    :param suffix: The suffix to print after the time.
     :return:  The time difference in human-readable format.
     """
-    now = datetime.utcnow()
-    last = difference_time
+    now = time1
+    last = time2
 
     date = now - last
 
-    txt = text + ' {0} {1} ago'
+    txt = text + ' {0} {1} ' + suffix
 
     if date.days <= 0:
         if date.seconds // 3600 <= 0:
