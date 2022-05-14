@@ -6,12 +6,14 @@ from utils import format_file_size
 
 
 class FileTemplate(QWidget):
-    def __init__(self, content):
+    def __init__(self, name, content_type, size):
         super(FileTemplate, self).__init__()
         self.ui = Ui_FileTemplate()
         self.ui.setupUi(self)
 
-        self.content: ContentFile = content
+        self.name = name
+        self.content_type = content_type
+        self.size = size
 
         self.fill()
 
@@ -19,8 +21,8 @@ class FileTemplate(QWidget):
         """
         Fill the widget with the data from the content file
         """
-        self.ui.nameWidget.setText(self.content.name)
-        self.ui.nameWidget.set_icon("fa5s.file-alt" if self.content.type == "file" else "fa5s.folder")
-        self.ui.sizeLabel.setText(str(format_file_size(self.content.size, "B", "KB")) + " KB")
-        if self.content.type == "dir":
+        self.ui.nameWidget.setText(self.name)
+        self.ui.nameWidget.set_icon("fa5s.file-alt" if self.content_type == "file" else "fa5s.folder")
+        self.ui.sizeLabel.setText(str(format_file_size(self.size, "B", "KB")) + " KB")
+        if self.content_type == "dir":
             self.ui.sizeLabel.setText("")

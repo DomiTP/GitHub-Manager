@@ -61,7 +61,7 @@ def clone(clone_url, clone_path, user):
             response = message_box.exec_()
             if response == QMessageBox.Yes:
                 try:
-                    shutil.rmtree(full_path)
+                    shutil.rmtree(full_path, ignore_errors=True)
                     pygit2.clone_repository(clone_url, full_path, callbacks=user.pygit_callback)
                 except Exception:
                     res = False, "Failed to clone repository " + repo_name

@@ -5,6 +5,7 @@ from PySide6.QtGui import QPixmap, QIcon
 from PySide6.QtWebEngineWidgets import QWebEngineView
 from PySide6.QtWidgets import QMainWindow, QLineEdit
 from github import Github, BadCredentialsException
+from requests import ConnectTimeout
 
 from modules import About
 from modules.user import User
@@ -44,6 +45,8 @@ class Login(QMainWindow):
         self.browser.setWindowTitle("Get personal access token")
         self.ui.ghmImageLabel.setPixmap(QPixmap(LOGO).scaled(QSize(120, 120)))
         self.ui.switchVisibilityButton.setIcon(QIcon(get_icon("dark_ocultar.png")))  # Al modo oscuro
+        self.ui.errorWidget.set_icon("fa5s.exclamation-triangle")
+        self.ui.errorWidget.set_text_style(color="red", font_size=13, bold=True)
 
     def config(self):
         """
@@ -98,9 +101,14 @@ class Login(QMainWindow):
             self.hide()
         except BadCredentialsException:
             self.ui.errorWidget.setText("Invalid token")
-            self.ui.errorWidget.set_icon("fa5s.exclamation-triangle")
-            self.ui.errorWidget.set_text_style(color="red", font_size=13, bold=True)
             self.ui.errorWidget.show()
+        except ConnectTimeout:
+            self.ui.errorWidget.setText("Connection timeout")
+            self.ui.errorWidget.show()
+        except Exception as e:
+            self.ui.errorWidget.setText("Unknown error")
+            self.ui.errorWidget.show()
+            print(e)
 
     def get_access_token(self):
         """

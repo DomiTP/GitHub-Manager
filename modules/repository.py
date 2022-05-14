@@ -1,6 +1,9 @@
+import sys
+import traceback
+
 import qtawesome as qta
 import requests
-from PySide6.QtCore import QUrl, QSize
+from PySide6.QtCore import QUrl, QSize, QRunnable, Signal, Slot, QObject, QThreadPool
 from PySide6.QtGui import QPixmap, QDesktopServices, QIcon, QImage
 from PySide6.QtWidgets import QWidget, QListWidgetItem
 from github.AuthenticatedUser import AuthenticatedUser
@@ -10,6 +13,36 @@ from modules import User
 from ui.widgets import Ui_repository
 from utils import time_formatter
 from widgets import CloneTemplate, FileTemplate, RepositoryListWidgetItem, EditRepository, IssueTemplate
+
+
+class WorkerSignals(QObject):
+    file = Signal(str, bool, str, int, str)
+    finished = Signal()
+    error = Signal(tuple)
+
+
+class Worker(QRunnable):
+    def __init__(self, content):
+        super(Worker, self).__init__()
+        self.content = content
+        self.signals = WorkerSignals()
+
+    @Slot(str)
+    def run(self):
+        try:
+            while self.content:
+                file_content = self.content.pop(0)
+                if file_content.type == "dir":
+                    self.signals.file.emit(file_content.name, True, file_content.type, file_content.size, "")
+                else:
+                    self.signals.file.emit(file_content.name, False, file_content.type, file_content.size,
+                                           file_content.html_url)
+        except Exception:
+            traceback.print_exc()
+            exctype, value = sys.exc_info()[:2]
+            self.signals.error.emit((exctype, value, traceback.format_exc()))
+        finally:
+            self.signals.finished.emit()
 
 
 class Repository(QWidget):
@@ -26,10 +59,14 @@ class Repository(QWidget):
         self.clone = CloneTemplate(self.repository, self.user)
         self.edit_repo = QWidget()
 
-        self.config_ui()
+        self.paths = [""]
+
+        self.thread_pool = QThreadPool()
+
         self.load_data()
         self.load_code_data()
         self.load_issues()
+        self.config_ui()
 
     def load_data(self):
         """
@@ -62,9 +99,10 @@ class Repository(QWidget):
 
         self.ui.descLabel.setText(self.repository.description)
         self.ui.codeButton.clicked.connect(lambda: self.clone.show())
-        self.ui.branchComboBox.currentTextChanged.connect(self.branch_changed)
         self.ui.filesListWidget.itemClicked.connect(self.on_click)
         self.ui.configButton.clicked.connect(self.edit_repo_window)
+        self.ui.branchComboBox.currentTextChanged.connect(self.branch_changed)
+        self.ui.branchComboBox.setCurrentText(self.repository.default_branch)
 
     def load_code_data(self):
         """
@@ -73,8 +111,6 @@ class Repository(QWidget):
         self.ui.branchComboBox.clear()
         for branch in self.repository.get_branches():
             self.ui.branchComboBox.addItem(QPixmap(qta.icon("fa5s.code-branch").pixmap(10, 10)), branch.name)
-
-        self.ui.branchComboBox.setCurrentText(self.repository.default_branch)
 
         image = QImage()
         image.loadFromData(requests.get(self.repository.owner.avatar_url).content)
@@ -103,46 +139,69 @@ class Repository(QWidget):
         :param branch_name: branch name
         """
         content = self.repository.get_contents("/", ref=branch_name)
-        self.load_content(content, depth=0)
+        self.load_content(content)
 
-    def load_content(self, content, full_path="/", depth=0, dir_name=None):
-        """
-        Load repo files to the QListWidget
-        :param dir_name:  dir name
-        :param content:  content
-        :param full_path:  last path
-        :param depth:  depth
-        """
+    # def load_content(self, content):
+    #     """
+    #     Load repo files to the QListWidget
+    #     :param content:  content
+    #     """
+    #     self.ui.filesListWidget.clear()
+    #
+    #     if len(self.paths) > 1:
+    #         item = RepositoryListWidgetItem("..", True, "", path=self.paths[-2], contents=self.repository.get_contents(
+    #                                                 self.paths[-2], ref=self.ui.branchComboBox.currentText()))
+    #         item.setText("..")
+    #         item.setIcon(QIcon(qta.icon("fa5s.arrow-up").pixmap(10, 10)))
+    #         self.ui.filesListWidget.addItem(item)
+    #
+    #     while content:
+    #         file_content = content.pop(0)
+    #         if file_content.type == "dir":
+    #             item = RepositoryListWidgetItem(file_content.name, True, file_content.html_url,
+    #                                             path=self.paths[-1]+"/"+file_content.name,
+    #                                             contents=self.repository.get_contents(
+    #                                                 file_content.path, ref=self.ui.branchComboBox.currentText()))
+    #         else:
+    #             item = RepositoryListWidgetItem(file_content.name, False, file_content.html_url)
+    #         widget = FileTemplate(file_content)
+    #         item.setSizeHint(widget.sizeHint())
+    #         self.ui.filesListWidget.addItem(item)
+    #         self.ui.filesListWidget.setItemWidget(item, widget)
+
+    def load_content(self, content):
+        self.ui.branchComboBox.setDisabled(True)
+        self.ui.configButton.setDisabled(True)
         self.ui.filesListWidget.clear()
-        if depth != 0:
-            if dir_name == "..":
-                cont = self.repository.get_contents("/".join(full_path.split("/")[:-1]),
-                                                    ref=self.ui.branchComboBox.currentText())
-                item = RepositoryListWidgetItem("..", True, "",
-                                                full_path if depth < 1 else "/".join(full_path.split("/")[:-1]),
-                                                depth=depth - 1, contents=cont)
-            else:
-                cont = self.repository.get_contents(full_path.split("/").pop(),
-                                                    ref=self.ui.branchComboBox.currentText())
-                item = RepositoryListWidgetItem("..", True, "", full_path if depth < 1 else full_path + dir_name + "/",
-                                                depth=depth - 1, contents=cont)
+
+        worker = Worker(content)
+        worker.signals.file.connect(self.add_file)
+        worker.signals.finished.connect(self.load_finished)
+
+        if len(self.paths) > 1:
+            item = RepositoryListWidgetItem("..", True, "", path=self.paths[-2], contents=self.repository.get_contents(
+                                                            self.paths[-2], ref=self.ui.branchComboBox.currentText()))
             item.setText("..")
             item.setIcon(QIcon(qta.icon("fa5s.arrow-up").pixmap(10, 10)))
             self.ui.filesListWidget.addItem(item)
 
-        while content:
-            file_content = content.pop(0)
-            if file_content.type == "dir":
-                item = RepositoryListWidgetItem(file_content.name, True, file_content.html_url,
-                                                full_path if depth < 1 else full_path + dir_name + "/", depth + 1,
-                                                contents=self.repository.get_contents(
-                                                    file_content.path, ref=self.ui.branchComboBox.currentText()))
-            else:
-                item = RepositoryListWidgetItem(file_content.name, False, file_content.html_url, full_path)
-            widget = FileTemplate(file_content)
-            item.setSizeHint(widget.sizeHint())
-            self.ui.filesListWidget.addItem(item)
-            self.ui.filesListWidget.setItemWidget(item, widget)
+        self.thread_pool.start(worker)
+
+    def add_file(self, file_name, is_directory, content_type, content_size, url):
+        if is_directory:
+            path = self.paths[-1] + "/" + file_name
+            item = RepositoryListWidgetItem(
+                file_name, True, "", path, self.repository.get_contents(path, ref=self.ui.branchComboBox.currentText()))
+        else:
+            item = RepositoryListWidgetItem(file_name, False, url)
+        widget = FileTemplate(file_name, content_type, content_size)
+        item.setSizeHint(widget.sizeHint())
+        self.ui.filesListWidget.addItem(item)
+        self.ui.filesListWidget.setItemWidget(item, widget)
+
+    def load_finished(self):
+        self.ui.branchComboBox.setDisabled(False)
+        self.ui.configButton.setDisabled(False)
 
     def on_click(self, item):
         """
@@ -150,7 +209,12 @@ class Repository(QWidget):
         :param item: RepositoryListWidgetItem
         """
         if item.isDirectory:
-            self.load_content(item.contents, item.path, item.depth, item.name)
+            if item.name == "..":
+                self.paths.pop()
+                self.load_content(item.contents)
+            else:
+                self.paths.append(item.path)
+                self.load_content(item.contents)
         else:
             QDesktopServices.openUrl(QUrl(item.url))
 

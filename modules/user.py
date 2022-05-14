@@ -10,6 +10,7 @@ class User:
         self.user: AuthenticatedUser = user
         self.named_user: NamedUser = self.github.get_user(self.user.login)
         self.repos = None
+        self.token = token
         self.pygit_callback = pygit2.RemoteCallbacks(pygit2.UserPass(token, 'x-oauth-basic'))
 
     def generate_repos(self):

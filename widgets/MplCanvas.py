@@ -7,4 +7,4 @@ class MplCanvas(FigureCanvasQTAgg):
         fig, self.ax = plt.subplots(figsize=(width, height), dpi=dpi)
         super().__init__(fig)
         self.setParent(parent)
-        self.ax.set(xlabel='total commits', ylabel='weeks', title='Commits per week')
+        self.ax.set(xlabel='weeks', ylabel='total commits', title='Commits per week')

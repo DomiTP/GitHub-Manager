@@ -8,11 +8,16 @@
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide6.QtCore import (QCoreApplication, QMetaObject)
-from PySide6.QtGui import (QFont)
-from PySide6.QtWidgets import (QFormLayout, QLabel, QLineEdit,
-                               QSizePolicy, QVBoxLayout)
-
+from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
+    QMetaObject, QObject, QPoint, QRect,
+    QSize, QTime, QUrl, Qt)
+from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
+    QFont, QFontDatabase, QGradient, QIcon,
+    QImage, QKeySequence, QLinearGradient, QPainter,
+    QPalette, QPixmap, QRadialGradient, QTransform)
+from PySide6.QtWidgets import (QApplication, QFormLayout, QHBoxLayout, QLabel,
+    QLineEdit, QPushButton, QSizePolicy, QSpacerItem,
+    QVBoxLayout, QWidget)
 
 class Ui_localRepository(object):
     def setupUi(self, localRepository):
@@ -136,16 +141,6 @@ class Ui_localRepository(object):
 
         self.formLayout.setWidget(8, QFormLayout.FieldRole, self.subscribersLineEdit)
 
-        self.licenseLabel = QLabel(localRepository)
-        self.licenseLabel.setObjectName(u"licenseLabel")
-
-        self.formLayout.setWidget(9, QFormLayout.LabelRole, self.licenseLabel)
-
-        self.licenseLineEdit = QLineEdit(localRepository)
-        self.licenseLineEdit.setObjectName(u"licenseLineEdit")
-        self.licenseLineEdit.setReadOnly(True)
-
-        self.formLayout.setWidget(9, QFormLayout.FieldRole, self.licenseLineEdit)
 
         self.verticalLayout.addLayout(self.formLayout)
 
@@ -158,22 +153,52 @@ class Ui_localRepository(object):
 
         self.verticalLayout_2.addWidget(self.label)
 
-        self.commitsImageLabel = QLabel(localRepository)
-        self.commitsImageLabel.setObjectName(u"commitsImageLabel")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
-        sizePolicy1.setHorizontalStretch(0)
-        sizePolicy1.setVerticalStretch(0)
-        sizePolicy1.setHeightForWidth(self.commitsImageLabel.sizePolicy().hasHeightForWidth())
-        self.commitsImageLabel.setSizePolicy(sizePolicy1)
+        self.commitsImageWidget = QWidget(localRepository)
+        self.commitsImageWidget.setObjectName(u"commitsImageWidget")
 
-        self.verticalLayout_2.addWidget(self.commitsImageLabel)
+        self.verticalLayout_2.addWidget(self.commitsImageWidget)
+
 
         self.verticalLayout.addLayout(self.verticalLayout_2)
+
+        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout.addItem(self.verticalSpacer)
+
+        self.horizontalLayout = QHBoxLayout()
+        self.horizontalLayout.setObjectName(u"horizontalLayout")
+        self.deleteButton = QPushButton(localRepository)
+        self.deleteButton.setObjectName(u"deleteButton")
+        sizePolicy.setHeightForWidth(self.deleteButton.sizePolicy().hasHeightForWidth())
+        self.deleteButton.setSizePolicy(sizePolicy)
+
+        self.horizontalLayout.addWidget(self.deleteButton)
+
+        self.openBrowserButton = QPushButton(localRepository)
+        self.openBrowserButton.setObjectName(u"openBrowserButton")
+        sizePolicy.setHeightForWidth(self.openBrowserButton.sizePolicy().hasHeightForWidth())
+        self.openBrowserButton.setSizePolicy(sizePolicy)
+
+        self.horizontalLayout.addWidget(self.openBrowserButton)
+
+        self.openFolderButton = QPushButton(localRepository)
+        self.openFolderButton.setObjectName(u"openFolderButton")
+        sizePolicy.setHeightForWidth(self.openFolderButton.sizePolicy().hasHeightForWidth())
+        self.openFolderButton.setSizePolicy(sizePolicy)
+
+        self.horizontalLayout.addWidget(self.openFolderButton)
+
+        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout.addItem(self.horizontalSpacer)
+
+
+        self.verticalLayout.addLayout(self.horizontalLayout)
+
 
         self.retranslateUi(localRepository)
 
         QMetaObject.connectSlotsByName(localRepository)
-
     # setupUi
 
     def retranslateUi(self, localRepository):
@@ -188,7 +213,9 @@ class Ui_localRepository(object):
         self.forksLabel.setText(QCoreApplication.translate("localRepository", u"Forks", None))
         self.starsLabel.setText(QCoreApplication.translate("localRepository", u"Stars", None))
         self.subscribersLabel.setText(QCoreApplication.translate("localRepository", u"Subscribers", None))
-        self.licenseLabel.setText(QCoreApplication.translate("localRepository", u"License", None))
         self.label.setText(QCoreApplication.translate("localRepository", u"Commits", None))
-        self.commitsImageLabel.setText("")
+        self.deleteButton.setText(QCoreApplication.translate("localRepository", u"Delete", None))
+        self.openBrowserButton.setText(QCoreApplication.translate("localRepository", u"Open browser", None))
+        self.openFolderButton.setText(QCoreApplication.translate("localRepository", u"Open folder", None))
     # retranslateUi
+

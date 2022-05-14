@@ -8,16 +8,20 @@
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide6.QtCore import (QCoreApplication, QMetaObject, QRect,
-                            Qt)
-from PySide6.QtGui import (QAction, QFont)
-from PySide6.QtWidgets import (QFrame, QHBoxLayout, QLabel,
-                               QLineEdit, QMenu, QMenuBar,
-                               QPushButton, QSizePolicy, QSpacerItem, QStatusBar,
-                               QVBoxLayout, QWidget)
+from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
+    QMetaObject, QObject, QPoint, QRect,
+    QSize, QTime, QUrl, Qt)
+from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
+    QCursor, QFont, QFontDatabase, QGradient,
+    QIcon, QImage, QKeySequence, QLinearGradient,
+    QPainter, QPalette, QPixmap, QRadialGradient,
+    QTransform)
+from PySide6.QtWidgets import (QApplication, QFrame, QHBoxLayout, QLabel,
+    QLineEdit, QMainWindow, QMenu, QMenuBar,
+    QPushButton, QSizePolicy, QSpacerItem, QStatusBar,
+    QVBoxLayout, QWidget)
 
 from widgets.IconLabel import IconLabel
-
 
 class Ui_GitHubManagerLogin(object):
     def setupUi(self, GitHubManagerLogin):
@@ -97,6 +101,7 @@ class Ui_GitHubManagerLogin(object):
 
         self.horizontalLayout.addWidget(self.githubAccesTokenButton)
 
+
         self.verticalLayout.addLayout(self.horizontalLayout)
 
         self.errorWidget = IconLabel(self.centralwidget)
@@ -134,19 +139,16 @@ class Ui_GitHubManagerLogin(object):
     def retranslateUi(self, GitHubManagerLogin):
         GitHubManagerLogin.setWindowTitle(QCoreApplication.translate("GitHubManagerLogin", u"Login", None))
         self.actionAbout.setText(QCoreApplication.translate("GitHubManagerLogin", u"About", None))
-        self.actionHow_to_get_an_GitHub_acces_token.setText(
-            QCoreApplication.translate("GitHubManagerLogin", u"How to get an GitHub acces token", None))
+        self.actionHow_to_get_an_GitHub_acces_token.setText(QCoreApplication.translate("GitHubManagerLogin", u"How to get an GitHub acces token", None))
         self.actionExit.setText(QCoreApplication.translate("GitHubManagerLogin", u"Exit", None))
         self.ghmImageLabel.setText("")
         self.signInLabel.setText(QCoreApplication.translate("GitHubManagerLogin", u"Sign in to GitHub Manager", None))
         self.label.setText(QCoreApplication.translate("GitHubManagerLogin", u"Personal acces token:", None))
-        self.tokenLineEdit.setText(
-            QCoreApplication.translate("GitHubManagerLogin", u"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", None))
-        self.tokenLineEdit.setPlaceholderText("")
+        self.tokenLineEdit.setText("")
+        self.tokenLineEdit.setPlaceholderText(QCoreApplication.translate("GitHubManagerLogin", u"ghp_W5FU93CFrM5y5a56fsaFFFV1EYaIf", None))
         self.switchVisibilityButton.setText("")
         self.signInButton.setText(QCoreApplication.translate("GitHubManagerLogin", u"Sign in", None))
-        self.githubAccesTokenButton.setText(
-            QCoreApplication.translate("GitHubManagerLogin", u"Generate Access Token", None))
+        self.githubAccesTokenButton.setText(QCoreApplication.translate("GitHubManagerLogin", u"Generate Access Token", None))
         self.menuMenu.setTitle(QCoreApplication.translate("GitHubManagerLogin", u"Menu", None))
         self.menuHelp.setTitle(QCoreApplication.translate("GitHubManagerLogin", u"Help", None))
     # retranslateUi

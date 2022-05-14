@@ -63,10 +63,10 @@
        <item>
         <widget class="QLineEdit" name="tokenLineEdit">
          <property name="text">
-             <string>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</string>
+          <string/>
          </property>
          <property name="placeholderText">
-          <string/>
+          <string>ghp_W5FU93CFrM5y5a56fsaFFFV1EYaIf</string>
          </property>
         </widget>
        </item>
@@ -89,19 +89,19 @@
         </property>
        </widget>
       </item>
-         <item>
-             <spacer name="horizontalSpacer">
-                 <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                     <size>
-                         <width>40</width>
-                         <height>20</height>
-                     </size>
-                 </property>
-             </spacer>
-         </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
       <item>
        <widget class="QPushButton" name="githubAccesTokenButton">
         <property name="sizePolicy">
@@ -110,26 +110,26 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
-           <property name="layoutDirection">
-               <enum>Qt::LeftToRight</enum>
-           </property>
-           <property name="text">
-               <string>Generate Access Token</string>
-           </property>
+        <property name="layoutDirection">
+         <enum>Qt::LeftToRight</enum>
+        </property>
+        <property name="text">
+         <string>Generate Access Token</string>
+        </property>
        </widget>
       </item>
      </layout>
     </item>
-       <item>
-           <widget class="IconLabel" name="errorWidget" native="true">
-               <property name="sizePolicy">
-                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                       <horstretch>0</horstretch>
-                       <verstretch>0</verstretch>
-                   </sizepolicy>
-               </property>
-           </widget>
-       </item>
+    <item>
+     <widget class="IconLabel" name="errorWidget" native="true">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -165,24 +165,24 @@
    </property>
   </action>
   <action name="actionHow_to_get_an_GitHub_acces_token">
-      <property name="text">
-          <string>How to get an GitHub acces token</string>
-      </property>
+   <property name="text">
+    <string>How to get an GitHub acces token</string>
+   </property>
   </action>
-     <action name="actionExit">
-         <property name="text">
-             <string>Exit</string>
-         </property>
-     </action>
+  <action name="actionExit">
+   <property name="text">
+    <string>Exit</string>
+   </property>
+  </action>
  </widget>
-    <customwidgets>
-        <customwidget>
-            <class>IconLabel</class>
-            <extends>QWidget</extends>
-            <header>widgets.IconLabel</header>
-            <container>1</container>
-        </customwidget>
-    </customwidgets>
-    <resources/>
-    <connections/>
+ <customwidgets>
+  <customwidget>
+   <class>IconLabel</class>
+   <extends>QWidget</extends>
+   <header>widgets.IconLabel</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
 </ui>
