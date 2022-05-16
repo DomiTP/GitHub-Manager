@@ -7,7 +7,8 @@ from PySide6.QtCore import QSize, QTimer
 from PySide6.QtGui import QIcon, QPixmap, QImage, Qt
 from PySide6.QtWidgets import QMainWindow, QApplication, QVBoxLayout, QMessageBox
 
-from modules import Login, About, Repositories, LocalRepositories
+from modules import Login, About, LocalRepositories
+from modules.repositories import Repositories
 from ui import Ui_MainWindow
 from utils import LOGO, time_formatter
 
@@ -35,14 +36,14 @@ class GitHubManager(QMainWindow):
 
         self.timer = QTimer(self)
 
-        self.config()
-
     def start(self, user):
         """
         Loads the user's information and repositories.
         :param user:
         """
         self.user = user
+
+        self.config()
 
         self.load_user_info()
         self.load_repositories()
@@ -59,8 +60,15 @@ class GitHubManager(QMainWindow):
         self.ui.actionExit.triggered.connect(self.close)
         self.ui.actionAbout.triggered.connect(lambda x: self.about.show())
         self.ui.actionReload.triggered.connect(self.reload)
+        self.ui.infoButton.clicked.connect(self.requests_info)
 
         self.ui.infoButton.setIcon(QIcon(qta.icon("fa5s.info-circle").pixmap(QSize(20, 20))))
+        self.ui.mainTabWidget.setTabIcon(0, qta.icon("ph.book-open"))
+        self.ui.mainTabWidget.setTabIcon(1, qta.icon("ph.book-bookmark"))
+        self.ui.mainTabWidget.setTabIcon(2, qta.icon("ph.desktop-tower"))
+
+        self.timer.timeout.connect(self.update_requests)
+        self.timer.start(1000)
 
     def load_repositories(self):
         """
@@ -124,13 +132,10 @@ class GitHubManager(QMainWindow):
         image.loadFromData(requests.get(user_data.avatar_url).content)
         self.ui.profileImageLabel.setPixmap(QPixmap(image).scaled(QSize(120, 120), Qt.KeepAspectRatio))
 
-        self.timer.timeout.connect(self.update_requests)
-        self.timer.start(1000)
-        self.ui.infoButton.clicked.connect(self.requests_info)
-
     def reload(self):
         self.load_user_info()
         self.load_repositories()
+        self.load_local_repositories()
 
     def update_requests(self):
         user_requests = self.user.github.rate_limiting[0]

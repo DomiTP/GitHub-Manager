@@ -1,8 +1,10 @@
 import traceback
 
+import qtawesome as qta
 from PySide6.QtCore import QRunnable, Signal, Slot, QThreadPool
 from PySide6.QtWidgets import QWidget, QListWidgetItem
 
+from modules.create_repository import CreateRepository
 from modules.repository import Repository
 from ui import Ui_Repositories
 from widgets import RepositoryTemplate
@@ -78,6 +80,18 @@ class Repositories(QWidget):
         Configures the signals of the widget
         """
         self.ui.listWidget.clicked.connect(self.open_repository)
+        self.ui.newButton.setIcon(qta.icon('ph.book-bookmark', color='white'))
+        self.ui.newButton.clicked.connect(self.create_repository)
+        self.ui.newButton.setToolTip("Create a new repository")
+        self.ui.newButton.setStyleSheet(
+            "background-color: #2ecc71; border-radius: 5px; border: none; color: white; font-size: 12px; padding: 5px;")
+
+    def create_repository(self):
+        """
+        Opens a new window to create a new repository
+        """
+        create_repo = CreateRepository(self.user)
+        create_repo.show()
 
     def open_repository(self):
         """

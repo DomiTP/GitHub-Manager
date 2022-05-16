@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+    <class>CreateRepo</class>
+    <widget class="QWidget" name="CreateRepo">
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>498</width>
+                <height>396</height>
+            </rect>
+        </property>
+        <property name="windowTitle">
+            <string>New Repository</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout">
+            <item>
+                <layout class="QHBoxLayout" name="horizontalLayout">
+                    <item>
+                        <widget class="QLabel" name="label">
+                            <property name="sizePolicy">
+                                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                                    <horstretch>0</horstretch>
+                                    <verstretch>0</verstretch>
+                                </sizepolicy>
+                            </property>
+                            <property name="font">
+                                <font>
+                                    <pointsize>16</pointsize>
+                                    <bold>true</bold>
+                                </font>
+                            </property>
+                            <property name="text">
+                                <string>Create new repository</string>
+                            </property>
+                            <property name="alignment">
+                                <set>Qt::AlignCenter</set>
+                            </property>
+                        </widget>
+                    </item>
+                </layout>
+            </item>
+            <item>
+                <layout class="QFormLayout" name="formLayout">
+                    <item row="0" column="0">
+                        <widget class="QLabel" name="nameLabel">
+                            <property name="text">
+                                <string>Name</string>
+                            </property>
+                        </widget>
+                    </item>
+                    <item row="0" column="1">
+                        <widget class="QLineEdit" name="nameLineEdit"/>
+                    </item>
+                    <item row="1" column="0">
+                        <widget class="QLabel" name="descriptionLabel">
+                            <property name="text">
+                                <string>Description</string>
+                            </property>
+                        </widget>
+                    </item>
+                    <item row="1" column="1">
+                        <widget class="QLineEdit" name="descriptionLineEdit"/>
+                    </item>
+                    <item row="2" column="0">
+                        <widget class="QLabel" name="homepageLabel">
+                            <property name="text">
+                                <string>Homepage</string>
+                            </property>
+                        </widget>
+                    </item>
+                    <item row="2" column="1">
+                        <widget class="QLineEdit" name="homepageLineEdit"/>
+                    </item>
+                    <item row="3" column="0">
+                        <widget class="QLabel" name="privateLabel">
+                            <property name="text">
+                                <string>Private</string>
+                            </property>
+                        </widget>
+                    </item>
+                    <item row="3" column="1">
+                        <widget class="QCheckBox" name="privateCheckBox"/>
+                    </item>
+                    <item row="4" column="0">
+                        <widget class="QLabel" name="hasIssuesLabel">
+                            <property name="text">
+                                <string>Has issues</string>
+                            </property>
+                        </widget>
+                    </item>
+                    <item row="4" column="1">
+                        <widget class="QCheckBox" name="hasIssuesCheckBox"/>
+                    </item>
+                    <item row="5" column="0">
+                        <widget class="QLabel" name="hasWikiLabel">
+                            <property name="text">
+                                <string>Has wiki</string>
+                            </property>
+                        </widget>
+                    </item>
+                    <item row="5" column="1">
+                        <widget class="QCheckBox" name="hasWikiCheckBox"/>
+                    </item>
+                    <item row="6" column="0">
+                        <widget class="QLabel" name="hasDownloadsLabel">
+                            <property name="text">
+                                <string>Has downloads</string>
+                            </property>
+                        </widget>
+                    </item>
+                    <item row="6" column="1">
+                        <widget class="QCheckBox" name="hasDownloadsCheckBox"/>
+                    </item>
+                    <item row="7" column="0">
+                        <widget class="QLabel" name="hasProjectsLabel">
+                            <property name="text">
+                                <string>Has projects</string>
+                            </property>
+                        </widget>
+                    </item>
+                    <item row="7" column="1">
+                        <widget class="QCheckBox" name="hasProjectsCheckBox"/>
+                    </item>
+                    <item row="8" column="0">
+                        <widget class="QLabel" name="autoInitLabel">
+                            <property name="text">
+                                <string>Auto init</string>
+                            </property>
+                        </widget>
+                    </item>
+                    <item row="8" column="1">
+                        <widget class="QCheckBox" name="autoInitCheckBox"/>
+                    </item>
+                    <item row="9" column="0">
+                        <widget class="QLabel" name="licenseTemplateLabel">
+                            <property name="text">
+                                <string>License template</string>
+                            </property>
+                        </widget>
+                    </item>
+                    <item row="9" column="1">
+                        <widget class="Autocomplete" name="licenseTemplateComboBox"/>
+                    </item>
+                    <item row="10" column="0">
+                        <widget class="QLabel" name="allowRebaseMergeLabel">
+                            <property name="text">
+                                <string>Allow rebase merge</string>
+                            </property>
+                        </widget>
+                    </item>
+                    <item row="10" column="1">
+                        <widget class="QCheckBox" name="allowRebaseMergeCheckBox"/>
+                    </item>
+                    <item row="11" column="0">
+                        <widget class="QLabel" name="allowMergeCommitLabel">
+                            <property name="text">
+                                <string>Allow merge commit</string>
+                            </property>
+                        </widget>
+                    </item>
+                    <item row="11" column="1">
+                        <widget class="QCheckBox" name="allowMergeCommitCheckBox"/>
+                    </item>
+                    <item row="12" column="0">
+                        <widget class="QLabel" name="gitignoreTemplateLabel">
+                            <property name="text">
+                                <string>Gitignore template</string>
+                            </property>
+                        </widget>
+                    </item>
+                    <item row="12" column="1">
+                        <widget class="Autocomplete" name="gitignoreTemplateComboBox"/>
+                    </item>
+                </layout>
+            </item>
+            <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_2">
+                    <item>
+                        <widget class="QPushButton" name="createRepoButton">
+                            <property name="text">
+                                <string>Create repository</string>
+                            </property>
+                        </widget>
+                    </item>
+                    <item>
+                        <widget class="QPushButton" name="cancelButton">
+                            <property name="sizePolicy">
+                                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                                    <horstretch>0</horstretch>
+                                    <verstretch>0</verstretch>
+                                </sizepolicy>
+                            </property>
+                            <property name="text">
+                                <string>Cancel</string>
+                            </property>
+                        </widget>
+                    </item>
+                </layout>
+            </item>
+        </layout>
+    </widget>
+    <customwidgets>
+        <customwidget>
+            <class>Autocomplete</class>
+            <extends>QComboBox</extends>
+            <header>widgets.AutocompletableComboBox</header>
+        </customwidget>
+    </customwidgets>
+    <resources/>
+    <connections/>
+</ui>
