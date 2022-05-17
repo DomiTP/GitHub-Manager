@@ -14,7 +14,6 @@ from PySide6.QtWidgets import (QCheckBox, QComboBox, QFormLayout,
                                QHBoxLayout, QLabel, QLayout, QLineEdit,
                                QPushButton, QSizePolicy, QSpacerItem, QVBoxLayout)
 
-
 class Ui_RepositoryEdit(object):
     def setupUi(self, RepositoryEdit):
         if not RepositoryEdit.objectName():
@@ -97,13 +96,28 @@ class Ui_RepositoryEdit(object):
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.horizontalLayout.setSizeConstraint(QLayout.SetDefaultConstraint)
+        self.deleteButton = QPushButton(RepositoryEdit)
+        self.deleteButton.setObjectName(u"deleteButton")
+        sizePolicy.setHeightForWidth(self.deleteButton.sizePolicy().hasHeightForWidth())
+        self.deleteButton.setSizePolicy(sizePolicy)
+
+        self.horizontalLayout.addWidget(self.deleteButton)
+
+        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout.addItem(self.horizontalSpacer)
+
         self.acceptButton = QPushButton(RepositoryEdit)
         self.acceptButton.setObjectName(u"acceptButton")
+        sizePolicy.setHeightForWidth(self.acceptButton.sizePolicy().hasHeightForWidth())
+        self.acceptButton.setSizePolicy(sizePolicy)
 
         self.horizontalLayout.addWidget(self.acceptButton)
 
         self.cancelButton = QPushButton(RepositoryEdit)
         self.cancelButton.setObjectName(u"cancelButton")
+        sizePolicy.setHeightForWidth(self.cancelButton.sizePolicy().hasHeightForWidth())
+        self.cancelButton.setSizePolicy(sizePolicy)
 
         self.horizontalLayout.addWidget(self.cancelButton)
 
@@ -112,7 +126,6 @@ class Ui_RepositoryEdit(object):
         self.retranslateUi(RepositoryEdit)
 
         QMetaObject.connectSlotsByName(RepositoryEdit)
-
     # setupUi
 
     def retranslateUi(self, RepositoryEdit):
@@ -123,6 +136,8 @@ class Ui_RepositoryEdit(object):
         self.homePageLabel.setText(QCoreApplication.translate("RepositoryEdit", u"Home Page", None))
         self.privateLabel.setText(QCoreApplication.translate("RepositoryEdit", u"Private", None))
         self.defaultBranchLabel.setText(QCoreApplication.translate("RepositoryEdit", u"Default Branch", None))
+        self.deleteButton.setText(QCoreApplication.translate("RepositoryEdit", u"Delete", None))
         self.acceptButton.setText(QCoreApplication.translate("RepositoryEdit", u"Accept", None))
         self.cancelButton.setText(QCoreApplication.translate("RepositoryEdit", u"Cancel", None))
     # retranslateUi
+

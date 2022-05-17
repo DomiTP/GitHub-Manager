@@ -5,11 +5,11 @@ from datetime import datetime
 import requests
 from PySide6.QtCore import QUrl
 from PySide6.QtGui import QDesktopServices
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QMessageBox
+from PySide6.QtWidgets import QWidget, QVBoxLayout
 from github.Repository import Repository
 
 from ui.widgets import Ui_localRepository
-from utils import get_repo_info, time_formatter
+from utils import get_repo_info, time_formatter, delete_repository_dialog
 from widgets import MplCanvas
 
 
@@ -94,37 +94,13 @@ class LocalRepository(QWidget):
         """
         Deletes the repo folder and all its contents
         """
-        if self.warn():
+        if delete_repository_dialog('local'):
             try:
                 shutil.rmtree(self.repo_path, ignore_errors=True)
                 print(f'{self.repo_path} deleted')
                 self.close()
             except Exception as e:
-                print(e)
-
-    def warn(self):
-        """
-        Shows a warning message
-        """
-        res = False
-        msg = QMessageBox()
-        msg.setIcon(QMessageBox.Warning)
-        msg.setText("You are about to delete the repository from the disk, this action cannot be undone.")
-        msg.setInformativeText("Are you sure you want to continue?")
-        msg.setWindowTitle("Warning")
-        msg.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
-        response = msg.exec()
-        if response == QMessageBox.Yes:
-            double_check = QMessageBox()
-            double_check.setIcon(QMessageBox.Warning)
-            double_check.setText("Are you really sure you want to continue?")
-            double_check.setInformativeText("This action cannot be undone.")
-            double_check.setWindowTitle("Warning")
-            double_check.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
-            response2 = double_check.exec()
-            if response2 == QMessageBox.Yes:
-                res = True
-        return res
+                print(e)  # TODO: Handle this exception
 
     def open_folder(self):
         """

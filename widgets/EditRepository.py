@@ -1,16 +1,19 @@
 from PySide6.QtWidgets import QWidget
+from github import GithubException
 
 from ui.widgets import Ui_RepositoryEdit
+from utils import delete_repository_dialog, message
 
 
 class EditRepository(QWidget):
-    def __init__(self, repo):
+    def __init__(self, repo, repo_widget):
         super(EditRepository, self).__init__()
 
         self.ui = Ui_RepositoryEdit()
         self.ui.setupUi(self)
 
         self.repo = repo
+        self.repo_widget = repo_widget
 
         self.fill()
         self.config()
@@ -27,6 +30,7 @@ class EditRepository(QWidget):
     def config(self):
         self.ui.acceptButton.clicked.connect(self.accept)
         self.ui.cancelButton.clicked.connect(lambda: self.close())
+        self.ui.deleteButton.clicked.connect(self.delete)
 
     def accept(self):
         self.repo.edit(
@@ -37,3 +41,13 @@ class EditRepository(QWidget):
             default_branch=self.ui.defaultBranchComboBox.currentText(),
         )
         self.close()
+
+    def delete(self):
+        if delete_repository_dialog('remote'):
+            try:
+                self.repo.delete()
+                message('success', 'Repository deleted')
+                self.repo_widget.close()
+                self.close()
+            except GithubException as e:
+                message('error', e.data['message'])

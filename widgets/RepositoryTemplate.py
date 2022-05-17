@@ -27,6 +27,12 @@ class RepositoryTemplate(QWidget):
         """
         self.ui.repoNameLabel.setText(self.repo.name)
         self.ui.visibilityLabel.setText('Private' if self.repo.private else 'Public')
+        if self.repo.fork:
+            self.ui.forkWidget.set_icon("fa.code-fork")
+            self.ui.forkWidget.setText("Forked from " + self.repo.parent.full_name)
+            self.ui.forkWidget.setStyleSheet("font-size: 9px;")
+            self.ui.forkWidget.show()
+
         self.ui.repoDescLabel.setText(self.repo.description)
         try:
             self.ui.licenseNameLabel.setText(self.repo.get_license().license.name)
@@ -45,6 +51,7 @@ class RepositoryTemplate(QWidget):
             QIcon(get_icon("dark_star.png" if self.repo.stargazers_count == 0 else "yellow_star.png")))
         self.ui.visibilityLabel.setStyleSheet("border: 1px solid black; border-radius: 10px; padding: 1px;")
         self.ui.starButton.clicked.connect(self.star_button)
+        self.ui.forkWidget.hide()
 
     def star(self):
         """

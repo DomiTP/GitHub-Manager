@@ -15,13 +15,14 @@ from PySide6.QtWidgets import (QCheckBox, QFormLayout, QHBoxLayout,
                                QVBoxLayout)
 
 from widgets.AutocompletableComboBox import Autocomplete
+from widgets.IconLabel import IconLabel
 
 
 class Ui_CreateRepo(object):
     def setupUi(self, CreateRepo):
         if not CreateRepo.objectName():
             CreateRepo.setObjectName(u"CreateRepo")
-        CreateRepo.resize(498, 396)
+        CreateRepo.resize(498, 398)
         self.verticalLayout = QVBoxLayout(CreateRepo)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.horizontalLayout = QHBoxLayout()
@@ -42,6 +43,13 @@ class Ui_CreateRepo(object):
         self.horizontalLayout.addWidget(self.label)
 
         self.verticalLayout.addLayout(self.horizontalLayout)
+
+        self.warningLabel = IconLabel(CreateRepo)
+        self.warningLabel.setObjectName(u"warningLabel")
+        sizePolicy.setHeightForWidth(self.warningLabel.sizePolicy().hasHeightForWidth())
+        self.warningLabel.setSizePolicy(sizePolicy)
+
+        self.verticalLayout.addWidget(self.warningLabel)
 
         self.formLayout = QFormLayout()
         self.formLayout.setObjectName(u"formLayout")
@@ -196,7 +204,6 @@ class Ui_CreateRepo(object):
         self.retranslateUi(CreateRepo)
 
         QMetaObject.connectSlotsByName(CreateRepo)
-
     # setupUi
 
     def retranslateUi(self, CreateRepo):
@@ -218,3 +225,4 @@ class Ui_CreateRepo(object):
         self.createRepoButton.setText(QCoreApplication.translate("CreateRepo", u"Create repository", None))
         self.cancelButton.setText(QCoreApplication.translate("CreateRepo", u"Cancel", None))
     # retranslateUi
+

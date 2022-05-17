@@ -123,9 +123,9 @@
       </item>
       <item>
        <spacer name="verticalSpacer">
-        <property name="orientation">
-            <enum>Qt::Vertical</enum>
-        </property>
+           <property name="orientation">
+               <enum>Qt::Vertical</enum>
+           </property>
            <property name="sizeHint" stdset="0">
                <size>
                    <width>20</width>
@@ -189,15 +189,16 @@
           <string>Overview</string>
          </attribute>
         </widget>
-        <widget class="QWidget" name="repositoriesTab">
-         <attribute name="icon">
-          <iconset>
-           <normaloff>../resources/icons/dark repo.png</normaloff>../resources/icons/dark repo.png</iconset>
-         </attribute>
-         <attribute name="title">
-          <string>Repositories</string>
-         </attribute>
-        </widget>
+           <widget class="QWidget" name="repositoriesTab">
+               <attribute name="icon">
+                   <iconset>
+                       <normaloff>../resources/icons/dark repo.png</normaloff>../resources/icons/dark repo.png
+                   </iconset>
+               </attribute>
+               <attribute name="title">
+                   <string>Repositories</string>
+               </attribute>
+           </widget>
            <widget class="QWidget" name="localTab">
                <attribute name="icon">
                    <iconset>
@@ -214,34 +215,34 @@
     </item>
    </layout>
   </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>1020</width>
-     <height>22</height>
-    </rect>
-   </property>
-      <widget class="QMenu" name="menuHelp">
-          <property name="title">
-              <string>Help</string>
-          </property>
-          <addaction name="actionAyuda"/>
-          <addaction name="separator"/>
-          <addaction name="actionAbout"/>
-      </widget>
-      <widget class="QMenu" name="menuMenu">
-          <property name="title">
-              <string>Menu</string>
-          </property>
-          <addaction name="actionReload"/>
-          <addaction name="separator"/>
-          <addaction name="actionExit"/>
-      </widget>
-      <addaction name="menuMenu"/>
-      <addaction name="menuHelp"/>
-  </widget>
+     <widget class="QMenuBar" name="menubar">
+         <property name="geometry">
+             <rect>
+                 <x>0</x>
+                 <y>0</y>
+                 <width>1020</width>
+                 <height>22</height>
+             </rect>
+         </property>
+         <widget class="QMenu" name="menuHelp">
+             <property name="title">
+                 <string>Help</string>
+             </property>
+             <addaction name="actionAyuda"/>
+             <addaction name="separator"/>
+             <addaction name="actionAbout"/>
+         </widget>
+         <widget class="QMenu" name="menuMenu">
+             <property name="title">
+                 <string>Menu</string>
+             </property>
+             <addaction name="actionReload"/>
+             <addaction name="separator"/>
+             <addaction name="actionExit"/>
+         </widget>
+         <addaction name="menuMenu"/>
+         <addaction name="menuHelp"/>
+     </widget>
      <widget class="QStatusBar" name="statusbar"/>
      <action name="actionAbout">
          <property name="text">

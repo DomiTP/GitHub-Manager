@@ -1,8 +1,9 @@
-from PySide6.QtWidgets import QWidget, QMessageBox
+from PySide6.QtWidgets import QWidget
 from github import GithubException
 
 from modules.repository import Repository
 from ui.widgets import Ui_CreateRepo
+from utils import message
 
 
 class CreateRepository(QWidget):
@@ -35,12 +36,24 @@ class CreateRepository(QWidget):
     def config(self):
         self.ui.cancelButton.clicked.connect(self.close)
         self.ui.createRepoButton.clicked.connect(self.create_repo)
+        self.ui.nameLineEdit.textChanged.connect(self.check_name)
+        self.ui.warningLabel.setText("")
+        self.ui.warningLabel.set_icon("fa.warning", "orange")
+        self.ui.warningLabel.hide()
+
+    def check_name(self, text):
+        if " " in text:
+            self.ui.warningLabel.setText("Your new repository will be created as " + text.replace(" ", "-") + ".")
+            if self.ui.warningLabel.isHidden():
+                self.ui.warningLabel.show()
+        else:
+            self.ui.warningLabel.hide()
 
     def create_repo(self):
         """
         Create a new repository.
         """
-        if self.message('warning', 'Are you sure you want to create this repository?'):
+        if message('warning', 'Are you sure you want to create this repository?'):
             if self.ui.nameLineEdit.text() != '':
                 try:
                     repo = self.user.get_data().create_repo(
@@ -62,44 +75,7 @@ class CreateRepository(QWidget):
 
                     self.close()
                 except GithubException as e:
-                    print(e.status, e.data, e.headers)
-                    self.message('error', e.data['message'], e.data['errors'][0]['message'])
+                    print(e.status, e.data, e.headers)  # TODO: Remove this line
+                    message('error', e.data['message'])
             else:
-                self.message('error', 'Repository name cannot be empty')
-
-    def message(self, type_, message, additional_info=None):
-        """
-        Show a message box with the given type and message.
-        :param type_:  Type of the message box.
-        :param message:  Message to show.
-        :param additional_info:  Additional information to show.
-        :return:  True if the user clicked the Yes button, False if the user clicked the No button,
-        or None if the user clicked the OK button.
-        """
-        messagebox = QMessageBox()
-        if type_ == 'error':
-            messagebox.setIcon(QMessageBox.Critical)
-            messagebox.setWindowTitle('Error')
-            messagebox.setStandardButtons(QMessageBox.Ok)
-        elif type_ == 'warning':
-            messagebox.setIcon(QMessageBox.Warning)
-            messagebox.setWindowTitle('Warning')
-            messagebox.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
-        elif type_ == 'success':
-            messagebox.setIcon(QMessageBox.Information)
-            messagebox.setWindowTitle('Success')
-            messagebox.setStandardButtons(QMessageBox.Ok)
-
-        messagebox.setText(message)
-        if additional_info:
-            messagebox.setDetailedText(additional_info)
-
-        result = messagebox.exec()
-        if result == QMessageBox.Yes:
-            ret = True
-        elif result == QMessageBox.No:
-            ret = False
-        else:
-            ret = None
-
-        return ret
+                message('error', 'Repository name cannot be empty')

@@ -6,6 +6,7 @@ import requests
 from PySide6.QtCore import QUrl, QSize, QRunnable, Signal, Slot, QObject, QThreadPool
 from PySide6.QtGui import QPixmap, QDesktopServices, QIcon, QImage
 from PySide6.QtWidgets import QWidget, QListWidgetItem
+from github import GithubException
 from github.AuthenticatedUser import AuthenticatedUser
 from github.Commit import Commit
 
@@ -116,13 +117,20 @@ class Repository(QWidget):
         image.loadFromData(requests.get(self.repository.owner.avatar_url).content)
         self.ui.profileImageLabel.setPixmap(QPixmap(image).scaled(QSize(20, 20)))
         self.ui.usernameLabel.setText(self.repository.owner.login)
-        commits = self.repository.get_commits()
-        last_commit: Commit = commits[0]
-        self.ui.commitLabel.setText(last_commit.commit.message)
-        self.ui.numsLabel.setText(last_commit.commit.sha[:7])
-        self.ui.timeLabel.setText(time_formatter("", time2=last_commit.commit.author.date))
-        self.ui.commitsWidget.setText(
-            str(commits.totalCount) + " commit" if commits.totalCount == 1 else str(commits.totalCount) + " commits")
+        try:
+            commits = self.repository.get_commits()
+            last_commit: Commit = commits[0]
+            self.ui.commitLabel.setText(last_commit.commit.message)
+            self.ui.numsLabel.setText(last_commit.commit.sha[:7])
+            self.ui.timeLabel.setText(time_formatter("", time2=last_commit.commit.author.date))
+            self.ui.commitsWidget.setText(
+                str(commits.totalCount) + " commit" if commits.totalCount == 1 else str(
+                    commits.totalCount) + " commits")
+        except GithubException:
+            self.ui.commitLabel.setText("No commits")
+            self.ui.numsLabel.setText("")
+            self.ui.timeLabel.setText("")
+            self.ui.commitsWidget.setText("0 commits")
 
     def load_issues(self):
         issues = self.repository.get_issues()
@@ -141,51 +149,27 @@ class Repository(QWidget):
         content = self.repository.get_contents("/", ref=branch_name)
         self.load_content(content)
 
-    # def load_content(self, content):
-    #     """
-    #     Load repo files to the QListWidget
-    #     :param content:  content
-    #     """
-    #     self.ui.filesListWidget.clear()
-    #
-    #     if len(self.paths) > 1:
-    #         item = RepositoryListWidgetItem("..", True, "", path=self.paths[-2], contents=self.repository.get_contents(
-    #                                                 self.paths[-2], ref=self.ui.branchComboBox.currentText()))
-    #         item.setText("..")
-    #         item.setIcon(QIcon(qta.icon("fa5s.arrow-up").pixmap(10, 10)))
-    #         self.ui.filesListWidget.addItem(item)
-    #
-    #     while content:
-    #         file_content = content.pop(0)
-    #         if file_content.type == "dir":
-    #             item = RepositoryListWidgetItem(file_content.name, True, file_content.html_url,
-    #                                             path=self.paths[-1]+"/"+file_content.name,
-    #                                             contents=self.repository.get_contents(
-    #                                                 file_content.path, ref=self.ui.branchComboBox.currentText()))
-    #         else:
-    #             item = RepositoryListWidgetItem(file_content.name, False, file_content.html_url)
-    #         widget = FileTemplate(file_content)
-    #         item.setSizeHint(widget.sizeHint())
-    #         self.ui.filesListWidget.addItem(item)
-    #         self.ui.filesListWidget.setItemWidget(item, widget)
-
     def load_content(self, content):
         self.ui.branchComboBox.setDisabled(True)
         self.ui.configButton.setDisabled(True)
         self.ui.filesListWidget.clear()
 
-        worker = Worker(content)
-        worker.signals.file.connect(self.add_file)
-        worker.signals.finished.connect(self.load_finished)
+        try:
+            worker = Worker(content)
+            worker.signals.file.connect(self.add_file)
+            worker.signals.finished.connect(self.load_finished)
 
-        if len(self.paths) > 1:
-            item = RepositoryListWidgetItem("..", True, "", path=self.paths[-2], contents=self.repository.get_contents(
-                                                            self.paths[-2], ref=self.ui.branchComboBox.currentText()))
-            item.setText("..")
-            item.setIcon(QIcon(qta.icon("fa5s.arrow-up").pixmap(10, 10)))
-            self.ui.filesListWidget.addItem(item)
+            if len(self.paths) > 1:
+                item = RepositoryListWidgetItem("..", True, "", path=self.paths[-2],
+                                                contents=self.repository.get_contents(
+                                                    self.paths[-2], ref=self.ui.branchComboBox.currentText()))
+                item.setText("..")
+                item.setIcon(QIcon(qta.icon("fa5s.arrow-up").pixmap(10, 10)))
+                self.ui.filesListWidget.addItem(item)
 
-        self.thread_pool.start(worker)
+            self.thread_pool.start(worker)
+        except GithubException as e:
+            print(e.status, e.data)  # TODO: handle exception
 
     def add_file(self, file_name, is_directory, content_type, content_size, url):
         if is_directory:
@@ -219,7 +203,7 @@ class Repository(QWidget):
             QDesktopServices.openUrl(QUrl(item.url))
 
     def edit_repo_window(self):
-        self.edit_repo = EditRepository(self.repository)
+        self.edit_repo = EditRepository(self.repository, self)
         self.edit_repo.show()
 
     def watch(self):
