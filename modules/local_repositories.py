@@ -4,7 +4,6 @@ import traceback
 
 import qtawesome as qta
 from PySide6.QtCore import QRunnable, Signal, Slot, QThreadPool, QObject
-from PySide6.QtGui import QPixmap
 from PySide6.QtWidgets import QWidget, QFileDialog
 
 from modules.local_repository import LocalRepository

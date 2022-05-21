@@ -10,7 +10,6 @@ from github import GithubException
 from github.AuthenticatedUser import AuthenticatedUser
 from github.Commit import Commit
 
-from modules import User
 from ui.widgets import Ui_repository
 from utils import time_formatter
 from widgets import CloneTemplate, FileTemplate, RepositoryListWidgetItem, EditRepository, IssueTemplate
@@ -54,7 +53,7 @@ class Repository(QWidget):
 
         self.repository = repo
 
-        self.user: User = user
+        self.user = user
         self.authenticated_user: AuthenticatedUser = user.get_data()
 
         self.clone = CloneTemplate(self.repository, self.user)

@@ -5,12 +5,14 @@ import qtawesome as qta
 import requests
 from PySide6.QtCore import QSize, QTimer
 from PySide6.QtGui import QIcon, QPixmap, QImage, Qt
-from PySide6.QtWidgets import QMainWindow, QApplication, QVBoxLayout, QMessageBox
+from PySide6.QtWidgets import QMainWindow, QApplication, QVBoxLayout, QMessageBox, QWidget
 
 from modules import Login, About, LocalRepositories
+from modules.overview import Overview
 from modules.repositories import Repositories
 from ui import Ui_MainWindow
 from utils import LOGO, time_formatter
+from widgets import EditProfile
 
 try:
     from ctypes import windll  # Only exists on Windows.
@@ -32,6 +34,8 @@ class GitHubManager(QMainWindow):
 
         self.about = About()
 
+        self.edit = QWidget()
+
         self.user = None
 
         self.timer = QTimer(self)
@@ -48,6 +52,7 @@ class GitHubManager(QMainWindow):
         self.load_user_info()
         self.load_repositories()
         self.load_local_repositories()
+        self.load_overview()
 
         self.show()
 
@@ -61,6 +66,8 @@ class GitHubManager(QMainWindow):
         self.ui.actionAbout.triggered.connect(lambda x: self.about.show())
         self.ui.actionReload.triggered.connect(self.reload)
         self.ui.infoButton.clicked.connect(self.requests_info)
+        self.ui.editProfileButton.clicked.connect(self.edit_profile)
+        self.ui.editProfileButton.hide()  # Actually, edit profile is broken in PyGithub, so it's hidden.
 
         self.ui.infoButton.setIcon(QIcon(qta.icon("fa5s.info-circle").pixmap(QSize(20, 20))))
         self.ui.mainTabWidget.setTabIcon(0, qta.icon("ph.book-open"))
@@ -83,6 +90,13 @@ class GitHubManager(QMainWindow):
         """
         local_repositories_widget = LocalRepositories(self.user)
         self.ui.localTab.setLayout(QVBoxLayout(self.ui.localTab).addWidget(local_repositories_widget))
+
+    def load_overview(self):
+        """
+        Loads the user's overview.
+        """
+        overview_widget = Overview(self.user)
+        self.ui.overviewTab.setLayout(QVBoxLayout(self.ui.overviewTab).addWidget(overview_widget))
 
     def load_user_info(self):
         """
@@ -133,16 +147,25 @@ class GitHubManager(QMainWindow):
         self.ui.profileImageLabel.setPixmap(QPixmap(image).scaled(QSize(120, 120), Qt.KeepAspectRatio))
 
     def reload(self):
+        """
+        Reloads the user's information.
+        """
         self.load_user_info()
         self.load_repositories()
         self.load_local_repositories()
 
     def update_requests(self):
+        """
+        Updates the requests.
+        """
         user_requests = self.user.github.rate_limiting[0]
         max_requests = self.user.github.rate_limiting[1]
         self.ui.infoButton.setToolTip("Requests: {}/{}".format(user_requests, max_requests))
 
     def requests_info(self):
+        """
+        Shows the requests information.
+        """
         message = QMessageBox()
         message.setWindowTitle("Requests")
         message.setText("Requests: {}/{} \n{}".format(
@@ -153,6 +176,14 @@ class GitHubManager(QMainWindow):
         ))
         message.setDefaultButton(QMessageBox.Ok)
         message.exec()
+
+    def edit_profile(self):
+        """
+        Edits the user's profile.
+        """
+        self.edit = EditProfile(self.user)
+        self.edit.show()
+        self.load_user_info()
 
     def closeEvent(self, event):
         """

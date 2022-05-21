@@ -81,7 +81,8 @@ class LocalRepository(QWidget):
                 total.append(x["total"])
             weeks = weeks[36:]
             total = total[36:]
-            canvas = MplCanvas(width=10, height=6, dpi=50)
+            canvas = MplCanvas(width=10, height=6, dpi=50, xlabel='weeks', ylabel='total commits',
+                               title='Commits per week')
             canvas.ax.bar(weeks, total)
             self.ui.commitsImageWidget.setLayout(QVBoxLayout(self.ui.commitsImageWidget).addWidget(canvas))
 
@@ -113,4 +114,3 @@ class LocalRepository(QWidget):
         Open the GitHub page of the repo
         """
         QDesktopServices.openUrl(QUrl(self.url))
-

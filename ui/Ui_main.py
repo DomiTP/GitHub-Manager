@@ -78,6 +78,11 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_2.addWidget(self.bioLabel)
 
+        self.editProfileButton = QPushButton(self.centralwidget)
+        self.editProfileButton.setObjectName(u"editProfileButton")
+
+        self.verticalLayout_2.addWidget(self.editProfileButton)
+
         self.companyWidget = IconLabel(self.centralwidget)
         self.companyWidget.setObjectName(u"companyWidget")
         sizePolicy2 = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Preferred)
@@ -119,6 +124,7 @@ class Ui_MainWindow(object):
         self.infoButton.setSizePolicy(sizePolicy)
 
         self.verticalLayout_2.addWidget(self.infoButton)
+
 
         self.horizontalLayout.addLayout(self.verticalLayout_2)
 
@@ -178,7 +184,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.mainTabWidget.setCurrentIndex(1)
+        self.mainTabWidget.setCurrentIndex(0)
 
         QMetaObject.connectSlotsByName(MainWindow)
     # setupUi
@@ -196,6 +202,7 @@ class Ui_MainWindow(object):
         self.nameLabel.setText(QCoreApplication.translate("MainWindow", u"name", None))
         self.userNameLabel.setText(QCoreApplication.translate("MainWindow", u"username", None))
         self.bioLabel.setText(QCoreApplication.translate("MainWindow", u"bio", None))
+        self.editProfileButton.setText(QCoreApplication.translate("MainWindow", u"Edit profile", None))
         self.infoButton.setText("")
         self.mainTabWidget.setTabText(self.mainTabWidget.indexOf(self.overviewTab),
                                       QCoreApplication.translate("MainWindow", u"Overview", None))

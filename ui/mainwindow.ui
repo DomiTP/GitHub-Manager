@@ -73,25 +73,32 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
-        <property name="text">
-         <string>bio</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-        </property>
+           <property name="text">
+               <string>bio</string>
+           </property>
+           <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+           </property>
        </widget>
       </item>
-      <item>
-       <widget class="IconLabel" name="companyWidget" native="true">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-       </widget>
-      </item>
-      <item>
+         <item>
+             <widget class="QPushButton" name="editProfileButton">
+                 <property name="text">
+                     <string>Edit profile</string>
+                 </property>
+             </widget>
+         </item>
+         <item>
+             <widget class="IconLabel" name="companyWidget" native="true">
+                 <property name="sizePolicy">
+                     <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                     </sizepolicy>
+                 </property>
+             </widget>
+         </item>
+         <item>
        <widget class="IconLabel" name="locationWidget" native="true">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
@@ -122,17 +129,17 @@
        </widget>
       </item>
       <item>
-       <spacer name="verticalSpacer">
-           <property name="orientation">
-               <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-               <size>
-                   <width>20</width>
-                   <height>40</height>
-               </size>
-           </property>
-       </spacer>
+          <spacer name="verticalSpacer">
+              <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+                  <size>
+                      <width>20</width>
+                      <height>40</height>
+                  </size>
+              </property>
+          </spacer>
       </item>
          <item>
              <widget class="QPushButton" name="infoButton">
@@ -160,7 +167,7 @@
          <enum>QTabWidget::Rounded</enum>
         </property>
         <property name="currentIndex">
-         <number>1</number>
+            <number>0</number>
         </property>
         <property name="iconSize">
          <size>
@@ -180,15 +187,16 @@
         <property name="movable">
          <bool>false</bool>
         </property>
-        <widget class="QWidget" name="overviewTab">
-         <attribute name="icon">
-          <iconset>
-           <normaloff>../resources/icons/dark open book.png</normaloff>../resources/icons/dark open book.png</iconset>
-         </attribute>
-         <attribute name="title">
-          <string>Overview</string>
-         </attribute>
-        </widget>
+           <widget class="QWidget" name="overviewTab">
+               <attribute name="icon">
+                   <iconset>
+                       <normaloff>../resources/icons/dark open book.png</normaloff>../resources/icons/dark open book.png
+                   </iconset>
+               </attribute>
+               <attribute name="title">
+                   <string>Overview</string>
+               </attribute>
+           </widget>
            <widget class="QWidget" name="repositoriesTab">
                <attribute name="icon">
                    <iconset>

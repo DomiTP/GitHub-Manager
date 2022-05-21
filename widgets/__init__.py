@@ -1,5 +1,6 @@
 from .CloneTemplate import *
 from .CustomWebEnginePage import *
+from .EditProfile import *
 from .EditRepository import *
 from .FileTemplate import *
 from .HyperlinkLabel import *
@@ -7,5 +8,6 @@ from .IconLabel import *
 from .IssueTemplate import *
 from .LocalRepositoryListWidgetItem import *
 from .MplCanvas import *
+from .PopularRepository import *
 from .RepositoryListWidgetItem import *
 from .RepositoryTemplate import *

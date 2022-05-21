@@ -1,8 +1,7 @@
-import traceback
-
 import qtawesome as qta
-from PySide6.QtCore import QRunnable, Signal, Slot, QThreadPool
+from PySide6.QtCore import QRunnable, Signal, Slot, QThreadPool, QObject
 from PySide6.QtWidgets import QWidget, QListWidgetItem
+from github.Repository import Repository as GithubRepository
 
 from modules.create_repository import CreateRepository
 from modules.repository import Repository
@@ -10,25 +9,24 @@ from ui import Ui_Repositories
 from widgets import RepositoryTemplate
 
 
-class Worker(QRunnable):
-    def __init__(self, func, *args, **kwargs):
-        super(Worker, self).__init__()
+class WorkerSignals(QObject):
+    repo = Signal(GithubRepository)
+    error = Signal(tuple)
+    finished = Signal()
 
-        self.func = func
-        self.args = args
-        self.kwargs = kwargs
-        self.finished = Signal()
-        self.error = Signal(str)
+
+class Worker(QRunnable):
+    def __init__(self, user, ui):
+        super().__init__()
+        self.user = user
+        self.ui = ui
+        self.signals = WorkerSignals()
 
     @Slot()
     def run(self):
-        try:
-            self.func(*self.args, **self.kwargs)
-        except:
-            traceback.print_exc()
-            self.error.emit(traceback.format_exc())
-        finally:
-            self.finished.emit()
+        for repo in self.user.get_repos():
+            self.signals.repo.emit(repo)
+        self.signals.finished.emit()
 
 
 class Repositories(QWidget):
@@ -40,51 +38,42 @@ class Repositories(QWidget):
         self.user = user
         self.open_repo = None
 
-        self.load_items()
-        self.config()
-
         self.threadpool = QThreadPool()
+
+        self.config()
+        self.async_load_items()
 
     def async_load_items(self):
         """
         Loads the repositories of the user in the listWidget asynchronously
         """
-        worker = Worker(self.load_items)
-        worker.finished.connect(self.finished)
-        worker.error.connect(self.error)
+        worker = Worker(self.user, self.ui)
+        worker.signals.repo.connect(self.add_repo)
+        worker.signals.finished.connect(self.finished)
+        self.ui.lineEdit.setDisabled(True)
+        self.ui.newButton.setDisabled(True)
         self.threadpool.start(worker)
 
+    def add_repo(self, repo):
+        item = QListWidgetItem()
+        item.setToolTip(repo.name)
+        widget = RepositoryTemplate(repo, self.user.get_data())
+        item.setSizeHint(widget.sizeHint())
+        self.ui.listWidget.addItem(item)
+        self.ui.listWidget.setItemWidget(item, widget)
+
     def finished(self):
-        print("Finished")
-
-    def error(self, error):
-        """
-        Shows an error message if an error occurs during the loading of the repositories
-        """
-        print(error)
-
-    def load_items(self):
-        """
-        Loads the repositories of the user in the listWidget
-        """
-        for repo in self.user.get_repos():
-            item = QListWidgetItem()
-            item.setToolTip(repo.name)
-            widget = RepositoryTemplate(repo, self.user.get_data())
-            item.setSizeHint(widget.sizeHint())
-            self.ui.listWidget.addItem(item)
-            self.ui.listWidget.setItemWidget(item, widget)
+        self.ui.lineEdit.setEnabled(True)
+        self.ui.newButton.setEnabled(True)
 
     def config(self):
         """
         Configures the signals of the widget
         """
         self.ui.listWidget.clicked.connect(self.open_repository)
-        self.ui.newButton.setIcon(qta.icon('ph.book-bookmark', color='white'))
+        self.ui.newButton.setIcon(qta.icon('ph.book-bookmark', color='black'))
         self.ui.newButton.clicked.connect(self.create_repository)
         self.ui.newButton.setToolTip("Create a new repository")
-        self.ui.newButton.setStyleSheet(
-            "background-color: #2ecc71; border-radius: 5px; border: none; color: white; font-size: 12px; padding: 5px;")
 
     def create_repository(self):
         """

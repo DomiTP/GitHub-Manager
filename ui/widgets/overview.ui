@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+    <class>Overview</class>
+    <widget class="QWidget" name="Overview">
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>827</width>
+                <height>439</height>
+            </rect>
+        </property>
+        <property name="windowTitle">
+            <string>Form</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout">
+            <item>
+                <widget class="QLabel" name="label">
+                    <property name="sizePolicy">
+                        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="font">
+                        <font>
+                            <pointsize>13</pointsize>
+                            <bold>true</bold>
+                        </font>
+                    </property>
+                    <property name="text">
+                        <string>Popular repositories</string>
+                    </property>
+                </widget>
+            </item>
+            <item>
+                <layout class="QGridLayout" name="gridLayout"/>
+            </item>
+            <item>
+                <widget class="QLabel" name="label_2">
+                    <property name="sizePolicy">
+                        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="font">
+                        <font>
+                            <pointsize>13</pointsize>
+                            <bold>true</bold>
+                        </font>
+                    </property>
+                    <property name="text">
+                        <string>Last year contributions</string>
+                    </property>
+                </widget>
+            </item>
+            <item>
+                <widget class="QWidget" name="contributionsWidget" native="true"/>
+            </item>
+        </layout>
+    </widget>
+    <resources/>
+    <connections/>
+</ui>
