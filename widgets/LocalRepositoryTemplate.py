@@ -16,17 +16,19 @@ class LocalRepositoryTemplate(QWidget):
         self.repo_path = repo_path
         self.user = user
 
+        self.repo_user, self.repo_name, self.full_repo_name = None, None, None
+
         self.config_ui()
 
         self.fill()
 
     def fill(self):
-        repo_user, repo_name, full_repo_name = get_repo_info(self.repo_path)
-        self.ui.repoNameLabel.setText(repo_name)
+        self.repo_user, self.repo_name, self.full_repo_name = get_repo_info(self.repo_path)
+        self.ui.repoNameLabel.setText(self.repo_name)
         self.ui.pathLineEdit.setText(self.repo_path)
 
         try:
-            repo = self.user.github.get_repo(full_repo_name)
+            repo = self.user.github.get_repo(self.full_repo_name)
             self.ui.githubButton.setIcon(QIcon(qta.icon('msc.github', color='green')))
             self.ui.githubButton.setToolTip('Open in Browser')
             self.ui.githubButton.clicked.connect(lambda: QDesktopServices.openUrl(QUrl(repo.html_url)))

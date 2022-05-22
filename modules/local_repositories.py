@@ -61,6 +61,7 @@ class LocalRepositories(QWidget):
     def load_finished(self):
         self.ui.searchButton.setEnabled(True)
         self.ui.searchPathButton.setEnabled(True)
+        self.ui.lineEdit.setEnabled(True)
         self.ui.loadingButton.hide()
 
     def add_new_repo(self, folder_name, path):
@@ -74,6 +75,7 @@ class LocalRepositories(QWidget):
         self.ui.loadingButton.show()
         self.ui.searchButton.setDisabled(True)
         self.ui.searchPathButton.setDisabled(True)
+        self.ui.lineEdit.setDisabled(True)
         self.ui.listWidget.clear()
 
         worker = Worker(self.ui.lineEdit_2.text())
@@ -90,6 +92,7 @@ class LocalRepositories(QWidget):
         self.ui.searchPathButton.clicked.connect(self.save_path)
         self.ui.searchButton.clicked.connect(self.thread_load_items)
         self.ui.lineEdit_2.setText(str(USER_HOME_PATH))
+        self.ui.lineEdit.textChanged.connect(self.on_text_changed)
         self.ui.loadingButton.setIcon(qta.icon('ri.loader-4-line', animation=qta.Pulse(self.ui.loadingButton)))
         self.ui.loadingButton.setToolTip("Searching repositories...")
         self.ui.loadingButton.hide()
@@ -109,3 +112,15 @@ class LocalRepositories(QWidget):
         repo_name = item.path
         self.open_repo = LocalRepository(repo_name, self.user)
         self.open_repo.show()
+
+    def on_text_changed(self, text):
+        """
+        Filters the repositories with the text entered the lineEdit
+        """
+        for row in range(self.ui.listWidget.count()):
+            item = self.ui.listWidget.item(row)
+            widget = self.ui.listWidget.itemWidget(item)
+            if text:
+                item.setHidden(not widget.repo_name.lower().startswith(text.lower()))
+            else:
+                item.setHidden(False)

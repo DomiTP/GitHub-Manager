@@ -10,9 +10,8 @@
 
 from PySide6.QtCore import (QCoreApplication, QMetaObject)
 from PySide6.QtGui import (QFont)
-from PySide6.QtWidgets import (QGridLayout, QLabel, QSizePolicy,
-                               QVBoxLayout, QWidget)
-
+from PySide6.QtWidgets import (QGridLayout, QLabel, QLayout,
+                               QSizePolicy, QVBoxLayout, QWidget)
 
 class Ui_Overview(object):
     def setupUi(self, Overview):
@@ -36,7 +35,9 @@ class Ui_Overview(object):
         self.verticalLayout.addWidget(self.label)
 
         self.gridLayout = QGridLayout()
+        self.gridLayout.setSpacing(2)
         self.gridLayout.setObjectName(u"gridLayout")
+        self.gridLayout.setSizeConstraint(QLayout.SetDefaultConstraint)
 
         self.verticalLayout.addLayout(self.gridLayout)
 
@@ -56,7 +57,6 @@ class Ui_Overview(object):
         self.retranslateUi(Overview)
 
         QMetaObject.connectSlotsByName(Overview)
-
     # setupUi
 
     def retranslateUi(self, Overview):
@@ -64,3 +64,4 @@ class Ui_Overview(object):
         self.label.setText(QCoreApplication.translate("Overview", u"Popular repositories", None))
         self.label_2.setText(QCoreApplication.translate("Overview", u"Last year contributions", None))
     # retranslateUi
+

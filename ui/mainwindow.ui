@@ -67,12 +67,12 @@
       </item>
       <item>
        <widget class="QLabel" name="bioLabel">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
+           <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+               </sizepolicy>
+           </property>
            <property name="text">
                <string>bio</string>
            </property>
@@ -99,16 +99,16 @@
              </widget>
          </item>
          <item>
-       <widget class="IconLabel" name="locationWidget" native="true">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-       </widget>
-      </item>
-      <item>
+             <widget class="IconLabel" name="locationWidget" native="true">
+                 <property name="sizePolicy">
+                     <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                     </sizepolicy>
+                 </property>
+             </widget>
+         </item>
+         <item>
        <widget class="IconLabel" name="twitterWidget" native="true">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
@@ -128,19 +128,19 @@
         </property>
        </widget>
       </item>
-      <item>
-          <spacer name="verticalSpacer">
-              <property name="orientation">
-                  <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-                  <size>
-                      <width>20</width>
-                      <height>40</height>
-                  </size>
-              </property>
-          </spacer>
-      </item>
+         <item>
+             <spacer name="verticalSpacer">
+                 <property name="orientation">
+                     <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                     <size>
+                         <width>20</width>
+                         <height>40</height>
+                     </size>
+                 </property>
+             </spacer>
+         </item>
          <item>
              <widget class="QPushButton" name="infoButton">
                  <property name="sizePolicy">
@@ -178,15 +178,15 @@
         <property name="elideMode">
          <enum>Qt::ElideMiddle</enum>
         </property>
-        <property name="documentMode">
-         <bool>false</bool>
-        </property>
-        <property name="tabsClosable">
-         <bool>false</bool>
-        </property>
-        <property name="movable">
-         <bool>false</bool>
-        </property>
+           <property name="documentMode">
+               <bool>false</bool>
+           </property>
+           <property name="tabsClosable">
+               <bool>false</bool>
+           </property>
+           <property name="movable">
+               <bool>false</bool>
+           </property>
            <widget class="QWidget" name="overviewTab">
                <attribute name="icon">
                    <iconset>

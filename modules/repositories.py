@@ -74,6 +74,7 @@ class Repositories(QWidget):
         self.ui.newButton.setIcon(qta.icon('ph.book-bookmark', color='black'))
         self.ui.newButton.clicked.connect(self.create_repository)
         self.ui.newButton.setToolTip("Create a new repository")
+        self.ui.lineEdit.textChanged.connect(self.on_text_changed)
 
     def create_repository(self):
         """
@@ -90,3 +91,15 @@ class Repositories(QWidget):
         repo_name = item.toolTip()
         self.open_repo = Repository(self.user.user.get_repo(repo_name), self.user)
         self.open_repo.show()
+
+    def on_text_changed(self, text):
+        """
+        Filters the repositories with the text entered the lineEdit
+        """
+        for row in range(self.ui.listWidget.count()):
+            item = self.ui.listWidget.item(row)
+            widget = self.ui.listWidget.itemWidget(item)
+            if text:
+                item.setHidden(not widget.repo.name.lower().startswith(text.lower()))
+            else:
+                item.setHidden(False)

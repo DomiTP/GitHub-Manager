@@ -5,7 +5,7 @@ from datetime import datetime
 import requests
 from PySide6.QtCore import QUrl
 from PySide6.QtGui import QDesktopServices
-from PySide6.QtWidgets import QWidget, QVBoxLayout
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QFileSystemModel
 from github.Repository import Repository
 
 from ui.widgets import Ui_localRepository
@@ -22,11 +22,13 @@ class LocalRepository(QWidget):
         self.repo_path = repo_path
         self.user = user
         self.url = None
+        self.model = None
 
         self.owner, self.repo_name, self.full_repo_name = get_repo_info(self.repo_path)
 
         self.config()
         self.load_data()
+        self.load_files()
 
     def load_data(self):
         try:
@@ -77,14 +79,21 @@ class LocalRepository(QWidget):
         total = []
         if response.status_code == 200:
             for x in response.json():
-                weeks.append(datetime.fromtimestamp(x["week"]).strftime('%m/%d'))
+                weeks.append(datetime.fromtimestamp(x["week"]).strftime('%d/%m'))
                 total.append(x["total"])
             weeks = weeks[36:]
             total = total[36:]
-            canvas = MplCanvas(width=10, height=6, dpi=50, xlabel='weeks', ylabel='total commits',
+            canvas = MplCanvas(width=10, height=6, dpi=75, xlabel='weeks', ylabel='total commits',
                                title='Commits per week')
             canvas.ax.bar(weeks, total)
             self.ui.commitsImageWidget.setLayout(QVBoxLayout(self.ui.commitsImageWidget).addWidget(canvas))
+
+    def load_files(self):
+        self.model = QFileSystemModel()
+        self.model.setRootPath(self.repo_path)
+        self.ui.treeView.setModel(self.model)
+        self.ui.treeView.setRootIndex(self.model.index(self.repo_path))
+        self.ui.treeView.setSortingEnabled(True)
 
     def config(self):
         self.ui.deleteButton.clicked.connect(self.delete_repo)

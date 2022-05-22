@@ -34,7 +34,14 @@
                 </widget>
             </item>
             <item>
-                <layout class="QGridLayout" name="gridLayout"/>
+                <layout class="QGridLayout" name="gridLayout">
+                    <property name="sizeConstraint">
+                        <enum>QLayout::SetDefaultConstraint</enum>
+                    </property>
+                    <property name="spacing">
+                        <number>2</number>
+                    </property>
+                </layout>
             </item>
             <item>
                 <widget class="QLabel" name="label_2">

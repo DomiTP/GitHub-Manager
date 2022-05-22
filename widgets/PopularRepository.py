@@ -31,12 +31,20 @@ class PopularRepository(QWidget):
             self.ui.forkWidget.setText("Forked from " + self.repo.parent.full_name)
             self.ui.forkWidget.setStyleSheet("font-size: 9px;")
             self.ui.forkWidget.show()
+        else:
+            self.ui.forkWidget.hide()
 
         self.ui.descLabel.setText(self.repo.description)
         try:
             lang = list(self.repo.get_languages().keys())[0]
             self.ui.langWidget.setText(lang)
-            self.ui.langWidget.set_icon("mdi.language-" + lang)
+            try:
+                self.ui.langWidget.set_icon("mdi.language-" + lang.lower())
+            except Exception:
+                if lang.lower() == "shell":
+                    self.ui.langWidget.set_icon("msc.terminal-bash")
+                else:
+                    self.ui.langWidget.set_icon("fa.github-alt")
         except Exception:
             self.ui.langWidget.hide()
 
@@ -54,6 +62,7 @@ class PopularRepository(QWidget):
         self.ui.nameLabel.clicked.connect(self.open_repo)
         self.ui.nameLabel.setStyleSheet("color: blue;")
         self.ui.nameLabel.setCursor(Qt.PointingHandCursor)
+        self.ui.frame.setStyleSheet(".QFrame{border: 1px solid black; border-radius: 10px;}")
 
     def open_repo(self):
         """

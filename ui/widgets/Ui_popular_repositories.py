@@ -20,7 +20,7 @@ class Ui_PopularRepositories(object):
     def setupUi(self, PopularRepositories):
         if not PopularRepositories.objectName():
             PopularRepositories.setObjectName(u"PopularRepositories")
-        PopularRepositories.resize(418, 172)
+        PopularRepositories.resize(192, 128)
         self.verticalLayout = QVBoxLayout(PopularRepositories)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.frame = QFrame(PopularRepositories)
@@ -93,7 +93,6 @@ class Ui_PopularRepositories(object):
         self.retranslateUi(PopularRepositories)
 
         QMetaObject.connectSlotsByName(PopularRepositories)
-
     # setupUi
 
     def retranslateUi(self, PopularRepositories):
@@ -102,3 +101,4 @@ class Ui_PopularRepositories(object):
         self.visibilityLabel.setText(QCoreApplication.translate("PopularRepositories", u"TextLabel", None))
         self.descLabel.setText(QCoreApplication.translate("PopularRepositories", u"TextLabel", None))
     # retranslateUi
+
