@@ -8,6 +8,5 @@ from .IconLabel import *
 from .IssueTemplate import *
 from .LocalRepositoryListWidgetItem import *
 from .MplCanvas import *
-from .PopularRepository import *
 from .RepositoryListWidgetItem import *
 from .RepositoryTemplate import *

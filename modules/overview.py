@@ -6,7 +6,8 @@ from dateutil.relativedelta import relativedelta
 from github.PaginatedList import PaginatedList
 
 from ui.widgets import Ui_Overview
-from widgets import PopularRepository, MplCanvas
+from widgets import MplCanvas
+from widgets.PopularRepository import PopularRepository
 
 
 class Overview(QWidget):

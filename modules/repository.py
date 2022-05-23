@@ -10,6 +10,7 @@ from github import GithubException
 from github.AuthenticatedUser import AuthenticatedUser
 from github.Commit import Commit
 
+from modules import User
 from ui.widgets import Ui_repository
 from utils import time_formatter
 from widgets import CloneTemplate, FileTemplate, RepositoryListWidgetItem, EditRepository, IssueTemplate
@@ -53,7 +54,7 @@ class Repository(QWidget):
 
         self.repository = repo
 
-        self.user = user
+        self.user: User = user
         self.authenticated_user: AuthenticatedUser = user.get_data()
 
         self.clone = CloneTemplate(self.repository, self.user)
@@ -171,16 +172,20 @@ class Repository(QWidget):
             print(e.status, e.data)  # TODO: handle exception
 
     def add_file(self, file_name, is_directory, content_type, content_size, url):
-        if is_directory:
-            path = self.paths[-1] + "/" + file_name
-            item = RepositoryListWidgetItem(
-                file_name, True, "", path, self.repository.get_contents(path, ref=self.ui.branchComboBox.currentText()))
-        else:
-            item = RepositoryListWidgetItem(file_name, False, url)
-        widget = FileTemplate(file_name, content_type, content_size)
-        item.setSizeHint(widget.sizeHint())
-        self.ui.filesListWidget.addItem(item)
-        self.ui.filesListWidget.setItemWidget(item, widget)
+        try:
+            if is_directory:
+                path = self.paths[-1] + "/" + file_name
+                item = RepositoryListWidgetItem(
+                    name=file_name, is_directory=True, url="", path=path,
+                    contents=self.repository.get_contents(path, ref=self.ui.branchComboBox.currentText()))
+            else:
+                item = RepositoryListWidgetItem(name=file_name, is_directory=False, url=url)
+            widget = FileTemplate(file_name, content_type, content_size)
+            item.setSizeHint(widget.sizeHint())
+            self.ui.filesListWidget.addItem(item)
+            self.ui.filesListWidget.setItemWidget(item, widget)
+        except Exception as e:
+            print(e)
 
     def load_finished(self):
         self.ui.branchComboBox.setDisabled(False)

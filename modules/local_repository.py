@@ -65,7 +65,7 @@ class LocalRepository(QWidget):
             self.ui.starsLineEdit.hide()
             self.ui.subscribersLabel.hide()
             self.ui.subscribersLineEdit.hide()
-            self.ui.label.hide()
+            self.ui.tabWidget.removeTab(2)
             self.ui.openBrowserButton.hide()
             self.ui.commitsImageWidget.hide()
 
