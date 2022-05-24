@@ -12,7 +12,7 @@ from github.Commit import Commit
 
 from modules import User
 from ui.widgets import Ui_repository
-from utils import time_formatter
+from utils import time_formatter, message
 from widgets import CloneTemplate, FileTemplate, RepositoryListWidgetItem, EditRepository, IssueTemplate
 
 
@@ -169,7 +169,7 @@ class Repository(QWidget):
 
             self.thread_pool.start(worker)
         except GithubException as e:
-            print(e.status, e.data)  # TODO: handle exception
+            message('error', e.data['message'])
 
     def add_file(self, file_name, is_directory, content_type, content_size, url):
         try:
@@ -185,7 +185,7 @@ class Repository(QWidget):
             self.ui.filesListWidget.addItem(item)
             self.ui.filesListWidget.setItemWidget(item, widget)
         except Exception as e:
-            print(e)
+            message('error', e)
 
     def load_finished(self):
         self.ui.branchComboBox.setDisabled(False)

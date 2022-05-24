@@ -14,7 +14,6 @@ from PySide6.QtWidgets import (QFormLayout, QHBoxLayout, QLabel, QLineEdit, QPus
                                QSpacerItem, QTabWidget, QTreeView, QVBoxLayout,
                                QWidget)
 
-
 class Ui_localRepository(object):
     def setupUi(self, localRepository):
         if not localRepository.objectName():
@@ -142,6 +141,7 @@ class Ui_localRepository(object):
         self.subscribersLineEdit.setReadOnly(True)
 
         self.formLayout.setWidget(8, QFormLayout.FieldRole, self.subscribersLineEdit)
+
 
         self.verticalLayout_3.addLayout(self.formLayout)
 

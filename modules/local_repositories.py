@@ -65,11 +65,14 @@ class LocalRepositories(QWidget):
         self.ui.loadingButton.hide()
 
     def add_new_repo(self, folder_name, path):
-        item = LocalRepositoryListWidgetItem(folder_name, path)
-        widget = LocalRepositoryTemplate(path, self.user)
-        item.setSizeHint(widget.sizeHint())
-        self.ui.listWidget.addItem(item)
-        self.ui.listWidget.setItemWidget(item, widget)
+        try:
+            item = LocalRepositoryListWidgetItem(folder_name, path)
+            widget = LocalRepositoryTemplate(path, self.user)
+            item.setSizeHint(widget.sizeHint())
+            self.ui.listWidget.addItem(item)
+            self.ui.listWidget.setItemWidget(item, widget)
+        except Exception:
+            print("Error while adding new repo " + folder_name + " " + path)
 
     def thread_load_items(self):
         self.ui.loadingButton.show()

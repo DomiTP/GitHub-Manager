@@ -75,7 +75,6 @@ class CreateRepository(QWidget):
 
                     self.close()
                 except GithubException as e:
-                    print(e.status, e.data, e.headers)  # TODO: Remove this line
                     message('error', e.data['message'])
             else:
                 message('error', 'Repository name cannot be empty')
