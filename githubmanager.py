@@ -1,10 +1,12 @@
 import sys
 from datetime import datetime
 
+import darkdetect
+import qdarktheme
 import qtawesome as qta
 import requests
-from PySide6.QtCore import QSize, QTimer
-from PySide6.QtGui import QIcon, QPixmap, QImage, Qt
+from PySide6.QtCore import QSize, QTimer, Slot
+from PySide6.QtGui import QIcon, QPixmap, QImage, Qt, QActionGroup
 from PySide6.QtWidgets import QMainWindow, QApplication, QVBoxLayout, QMessageBox, QWidget
 
 from modules import Login, About, LocalRepositories
@@ -73,6 +75,15 @@ class GitHubManager(QMainWindow):
         self.ui.mainTabWidget.setTabIcon(0, qta.icon("ph.book-open"))
         self.ui.mainTabWidget.setTabIcon(1, qta.icon("ph.book-bookmark"))
         self.ui.mainTabWidget.setTabIcon(2, qta.icon("ph.desktop-tower"))
+
+        self.sync_theme_with_system()
+
+        dark_white_mode = QActionGroup(self)
+        dark_white_mode.setExclusive(True)
+        dark_white_mode.addAction(self.ui.actionDark)
+        dark_white_mode.addAction(self.ui.actionLight)
+        self.ui.actionDark.triggered.connect(lambda: self.change_theme("dark"))
+        self.ui.actionLight.triggered.connect(lambda: self.change_theme("light"))
 
         self.timer.timeout.connect(self.update_requests)
         self.timer.start(1000)
@@ -184,6 +195,26 @@ class GitHubManager(QMainWindow):
         self.edit = EditProfile(self.user)
         self.edit.show()
         self.load_user_info()
+
+    @Slot()
+    def sync_theme_with_system(self) -> None:
+        theme = darkdetect.theme().lower()
+        print(theme)
+        if theme == "dark":
+            self.ui.actionDark.setChecked(True)
+        else:
+            self.ui.actionLight.setChecked(True)
+        stylesheet = qdarktheme.load_stylesheet(theme)
+        QApplication.instance().setStyleSheet(stylesheet)
+
+    @Slot(str)
+    def change_theme(self, theme) -> None:
+        if theme == "dark":
+            self.ui.actionDark.setChecked(True)
+        else:
+            self.ui.actionLight.setChecked(True)
+        stylesheet = qdarktheme.load_stylesheet(theme)
+        QApplication.instance().setStyleSheet(stylesheet)
 
     def closeEvent(self, event):
         """

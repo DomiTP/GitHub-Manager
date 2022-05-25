@@ -109,25 +109,25 @@
              </widget>
          </item>
          <item>
-       <widget class="IconLabel" name="twitterWidget" native="true">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="IconLabel" name="joinedWidget" native="true">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-       </widget>
-      </item>
+             <widget class="IconLabel" name="twitterWidget" native="true">
+                 <property name="sizePolicy">
+                     <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                     </sizepolicy>
+                 </property>
+             </widget>
+         </item>
+         <item>
+             <widget class="IconLabel" name="joinedWidget" native="true">
+                 <property name="sizePolicy">
+                     <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                     </sizepolicy>
+                 </property>
+             </widget>
+         </item>
          <item>
              <spacer name="verticalSpacer">
                  <property name="orientation">
@@ -169,15 +169,15 @@
         <property name="currentIndex">
             <number>0</number>
         </property>
-        <property name="iconSize">
-         <size>
-          <width>16</width>
-          <height>16</height>
-         </size>
-        </property>
-        <property name="elideMode">
-         <enum>Qt::ElideMiddle</enum>
-        </property>
+           <property name="iconSize">
+               <size>
+                   <width>16</width>
+                   <height>16</height>
+               </size>
+           </property>
+           <property name="elideMode">
+               <enum>Qt::ElideMiddle</enum>
+           </property>
            <property name="documentMode">
                <bool>false</bool>
            </property>
@@ -244,6 +244,15 @@
              <property name="title">
                  <string>Menu</string>
              </property>
+             <widget class="QMenu" name="menuMode">
+                 <property name="title">
+                     <string>Mode</string>
+                 </property>
+                 <addaction name="actionDark"/>
+                 <addaction name="actionLight"/>
+             </widget>
+             <addaction name="menuMode"/>
+             <addaction name="separator"/>
              <addaction name="actionReload"/>
              <addaction name="separator"/>
              <addaction name="actionExit"/>
@@ -254,12 +263,12 @@
      <widget class="QStatusBar" name="statusbar"/>
      <action name="actionAbout">
          <property name="text">
-             <string>Acerca de</string>
+             <string>About</string>
          </property>
      </action>
      <action name="actionAyuda">
          <property name="text">
-             <string>Ayuda de GitHub Manager</string>
+             <string>GitHub Manager Manual</string>
          </property>
      </action>
      <action name="actionExit">
@@ -273,6 +282,16 @@
          </property>
          <property name="shortcut">
              <string>Ctrl+R</string>
+         </property>
+     </action>
+     <action name="actionDark">
+         <property name="text">
+             <string>Dark</string>
+         </property>
+     </action>
+     <action name="actionLight">
+         <property name="text">
+             <string>Light</string>
          </property>
      </action>
  </widget>

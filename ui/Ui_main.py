@@ -32,6 +32,10 @@ class Ui_MainWindow(object):
         self.actionExit.setObjectName(u"actionExit")
         self.actionReload = QAction(MainWindow)
         self.actionReload.setObjectName(u"actionReload")
+        self.actionDark = QAction(MainWindow)
+        self.actionDark.setObjectName(u"actionDark")
+        self.actionLight = QAction(MainWindow)
+        self.actionLight.setObjectName(u"actionLight")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.horizontalLayout = QHBoxLayout(self.centralwidget)
@@ -157,7 +161,6 @@ class Ui_MainWindow(object):
 
         self.verticalLayout.addWidget(self.mainTabWidget)
 
-
         self.horizontalLayout.addLayout(self.verticalLayout)
 
         MainWindow.setCentralWidget(self.centralwidget)
@@ -168,6 +171,8 @@ class Ui_MainWindow(object):
         self.menuHelp.setObjectName(u"menuHelp")
         self.menuMenu = QMenu(self.menubar)
         self.menuMenu.setObjectName(u"menuMenu")
+        self.menuMode = QMenu(self.menuMenu)
+        self.menuMode.setObjectName(u"menuMode")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
@@ -178,9 +183,13 @@ class Ui_MainWindow(object):
         self.menuHelp.addAction(self.actionAyuda)
         self.menuHelp.addSeparator()
         self.menuHelp.addAction(self.actionAbout)
+        self.menuMenu.addAction(self.menuMode.menuAction())
+        self.menuMenu.addSeparator()
         self.menuMenu.addAction(self.actionReload)
         self.menuMenu.addSeparator()
         self.menuMenu.addAction(self.actionExit)
+        self.menuMode.addAction(self.actionDark)
+        self.menuMode.addAction(self.actionLight)
 
         self.retranslateUi(MainWindow)
 
@@ -191,13 +200,15 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"GitHub Manager", None))
-        self.actionAbout.setText(QCoreApplication.translate("MainWindow", u"Acerca de", None))
-        self.actionAyuda.setText(QCoreApplication.translate("MainWindow", u"Ayuda de GitHub Manager", None))
+        self.actionAbout.setText(QCoreApplication.translate("MainWindow", u"About", None))
+        self.actionAyuda.setText(QCoreApplication.translate("MainWindow", u"GitHub Manager Manual", None))
         self.actionExit.setText(QCoreApplication.translate("MainWindow", u"Exit", None))
         self.actionReload.setText(QCoreApplication.translate("MainWindow", u"Reload", None))
         # if QT_CONFIG(shortcut)
         self.actionReload.setShortcut(QCoreApplication.translate("MainWindow", u"Ctrl+R", None))
         # endif // QT_CONFIG(shortcut)
+        self.actionDark.setText(QCoreApplication.translate("MainWindow", u"Dark", None))
+        self.actionLight.setText(QCoreApplication.translate("MainWindow", u"Light", None))
         self.profileImageLabel.setText("")
         self.nameLabel.setText(QCoreApplication.translate("MainWindow", u"name", None))
         self.userNameLabel.setText(QCoreApplication.translate("MainWindow", u"username", None))
@@ -212,5 +223,6 @@ class Ui_MainWindow(object):
                                       QCoreApplication.translate("MainWindow", u"Local", None))
         self.menuHelp.setTitle(QCoreApplication.translate("MainWindow", u"Help", None))
         self.menuMenu.setTitle(QCoreApplication.translate("MainWindow", u"Menu", None))
+        self.menuMode.setTitle(QCoreApplication.translate("MainWindow", u"Mode", None))
     # retranslateUi
 
