@@ -6,7 +6,7 @@ from github.Repository import Repository as GithubRepository
 from modules.create_repository import CreateRepository
 from modules.repository import Repository
 from ui import Ui_Repositories
-from widgets import RepositoryTemplate
+from widgets import RepositoryTemplate, RepositoriesListWidgetItem
 
 
 class WorkerSignals(QObject):
@@ -37,6 +37,7 @@ class Repositories(QWidget):
 
         self.user = user
         self.open_repo = None
+        self.worker = Worker(self.user, self.ui)
 
         self.threadpool = QThreadPool()
 
@@ -47,13 +48,13 @@ class Repositories(QWidget):
         """
         Loads the repositories of the user in the listWidget asynchronously
         """
-        worker = Worker(self.user, self.ui)
-        worker.signals.repo.connect(self.add_repo)
-        worker.signals.finished.connect(self.finished)
+        self.worker.signals.repo.connect(self.add_repo)
+        self.worker.signals.finished.connect(self.finished)
         self.ui.lineEdit.setDisabled(True)
         self.ui.newButton.setDisabled(True)
-        self.threadpool.start(worker)
+        self.threadpool.start(self.worker)
 
+    @Slot(GithubRepository)
     def add_repo(self, repo):
         item = QListWidgetItem()
         item.setToolTip(repo.name)

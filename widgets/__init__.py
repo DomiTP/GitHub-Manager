@@ -10,3 +10,4 @@ from .LocalRepositoryListWidgetItem import *
 from .MplCanvas import *
 from .RepositoryListWidgetItem import *
 from .RepositoryTemplate import *
+from .RepositoriesListWidgetItem import *

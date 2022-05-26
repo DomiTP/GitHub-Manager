@@ -1,6 +1,7 @@
 from datetime import date
 
 import requests
+from PySide6.QtCore import Slot
 from PySide6.QtWidgets import QWidget, QVBoxLayout
 from dateutil.relativedelta import relativedelta
 from github.PaginatedList import PaginatedList
@@ -21,6 +22,7 @@ class Overview(QWidget):
         self.load_popular_repos()
         self.load_contributions()
 
+    @Slot()
     def load_popular_repos(self):
         popular_repos: PaginatedList = self.user.get_data().get_repos(visibility="public", sort="updated",
                                                                       direction="desc")
@@ -28,6 +30,7 @@ class Overview(QWidget):
         for positions, popular_repo in zip(positions, popular_repos):
             self.ui.gridLayout.addWidget(PopularRepository(popular_repo, self.user), *positions)
 
+    @Slot()
     def load_contributions(self):
         year = date.today().year
         response = requests.get(f'https://skyline.github.com/{self.user.user.login}/{year}.json',

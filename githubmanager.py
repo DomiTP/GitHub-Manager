@@ -4,7 +4,7 @@ from datetime import datetime
 import qtawesome as qta
 import requests
 from PySide6.QtCore import QSize, QTimer
-from PySide6.QtGui import QIcon, QPixmap, QImage, Qt
+from PySide6.QtGui import QIcon, QPixmap, QImage, Qt, QScreen
 from PySide6.QtWidgets import QMainWindow, QApplication, QVBoxLayout, QMessageBox, QWidget
 
 from modules import Login, About, LocalRepositories
@@ -73,6 +73,11 @@ class GitHubManager(QMainWindow):
         self.ui.mainTabWidget.setTabIcon(0, qta.icon("ph.book-open"))
         self.ui.mainTabWidget.setTabIcon(1, qta.icon("ph.book-bookmark"))
         self.ui.mainTabWidget.setTabIcon(2, qta.icon("ph.desktop-tower"))
+
+        center = QScreen.availableGeometry(QApplication.primaryScreen()).center()
+        geo = self.frameGeometry()
+        geo.moveCenter(center)
+        self.move(geo.topLeft())
 
         self.timer.timeout.connect(self.update_requests)
         self.timer.start(1000)

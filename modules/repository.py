@@ -102,8 +102,9 @@ class Repository(QWidget):
         self.ui.codeButton.clicked.connect(lambda: self.clone.show())
         self.ui.filesListWidget.itemClicked.connect(self.on_click)
         self.ui.configButton.clicked.connect(self.edit_repo_window)
-        self.ui.branchComboBox.currentTextChanged.connect(self.branch_changed)
         self.ui.branchComboBox.setCurrentText(self.repository.default_branch)
+        self.ui.branchComboBox.currentTextChanged.connect(self.branch_changed)
+        self.branch_changed(self.repository.default_branch)
 
     def load_code_data(self):
         """
@@ -127,6 +128,7 @@ class Repository(QWidget):
                 str(commits.totalCount) + " commit" if commits.totalCount == 1 else str(
                     commits.totalCount) + " commits")
         except GithubException:
+            print(GithubException)
             self.ui.commitLabel.setText("No commits")
             self.ui.numsLabel.setText("")
             self.ui.timeLabel.setText("")
@@ -169,6 +171,7 @@ class Repository(QWidget):
 
             self.thread_pool.start(worker)
         except GithubException as e:
+            print(e)
             message('error', e.data['message'])
 
     def add_file(self, file_name, is_directory, content_type, content_size, url):
@@ -185,6 +188,7 @@ class Repository(QWidget):
             self.ui.filesListWidget.addItem(item)
             self.ui.filesListWidget.setItemWidget(item, widget)
         except Exception as e:
+            print(e)
             message('error', e)
 
     def load_finished(self):

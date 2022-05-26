@@ -1,9 +1,9 @@
 import re
 
 from PySide6.QtCore import QSize
-from PySide6.QtGui import QPixmap, QIcon
+from PySide6.QtGui import QPixmap, QIcon, QScreen
 from PySide6.QtWebEngineWidgets import QWebEngineView
-from PySide6.QtWidgets import QMainWindow, QLineEdit
+from PySide6.QtWidgets import QMainWindow, QLineEdit, QApplication
 from github import Github, BadCredentialsException
 from requests import ConnectTimeout
 
@@ -47,6 +47,11 @@ class Login(QMainWindow):
         self.ui.switchVisibilityButton.setIcon(QIcon(get_icon("dark_ocultar.png")))  # Al modo oscuro
         self.ui.errorWidget.set_icon("fa5s.exclamation-triangle")
         self.ui.errorWidget.set_text_style(color="red", font_size=13, bold=True)
+
+        center = QScreen.availableGeometry(QApplication.primaryScreen()).center()
+        geo = self.frameGeometry()
+        geo.moveCenter(center)
+        self.move(geo.topLeft())
 
     def config(self):
         """
